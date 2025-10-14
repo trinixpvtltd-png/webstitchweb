@@ -31,15 +31,19 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#services" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-services">
+            <a href="/home" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-home">
+              Home
+            </a>
+            <a href="/about" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-about">
+              About
+            </a>
+            <a href="/services" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-services">
               Services
             </a>
-            <a href="#insights" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-insights">
-              Insights
+            <a href="/blog" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-blog">
+              Blog
             </a>
-            <a href="#faq" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-faq">
-              FAQ
-            </a>
+           
           </div>
 
           <div className="hidden md:flex items-center gap-2">
@@ -66,8 +70,17 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border mt-2" data-testid="mobile-menu">
             <div className="flex flex-col gap-2">
-              <a href="#services" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-services">
+              <a href="/home" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-home">
+                Home
+              </a>
+              <a href="/about" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-about">
+                About
+              </a>
+              <a href="/services" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-services">
                 Services
+              </a>
+              <a href="/blog" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-blog">
+                Blog
               </a>
               <a href="#insights" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-insights">
                 Insights
