@@ -40,8 +40,18 @@ export default function Navigation() {
             <a href="/services" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-services">
               Services
             </a>
+            <a href="/portfolio" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-portfolio">
+              Portfolio
+            </a>
+            
             <a href="/blog" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-blog">
               Blog
+            </a>
+            <a href="/careers" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-careers">
+              Careers
+            </a>
+            <a href="/contact" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-contact">
+              Contact
             </a>
            
           </div>
@@ -79,15 +89,20 @@ export default function Navigation() {
               <a href="/services" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-services">
                 Services
               </a>
+              <a href="/portfolio" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-portfolio">
+                Portfolio
+              </a>
+             
               <a href="/blog" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-blog">
                 Blog
               </a>
-              <a href="#insights" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-insights">
-                Insights
+              <a href="/careers" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-careers">
+                Careers
               </a>
-              <a href="#faq" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-faq">
-                FAQ
+              <a href="/contact" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-contact">
+                Contact
               </a>
+             
               <Button size="sm" className="mt-2" data-testid="button-mobile-cta">
                 Get Started
               </Button>

@@ -153,31 +153,30 @@ export default function Blog() {
     : latestArticles.filter(article => article.tags.includes(selectedTag) || article.category === selectedTag);
 
   return (
-    <div className="min-h-screen">
+  <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
       <Navigation />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-neutral-900/70 to-background text-center py-16 md:py-20">
+  <section className="bg-gradient-to-b from-[#ede9fe] to-[#e9eefa] text-center py-16 md:py-20 dark:bg-gradient-to-b dark:from-[#23263a] dark:to-[#181a20]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Tech Insights & Trends</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">Tech Insights & Trends</h1>
+            <p className="text-lg text-[#5c6bc0] max-w-3xl mx-auto dark:text-[#a5b4fc]">
               Stay ahead of the curve with expert insights on web development, digital marketing, and emerging technologies from the WebStitch team.
             </p>
-            
             {/* Search bar */}
             <div className="relative max-w-lg mx-auto mt-8">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#7c3aed]" />
               <Input 
                 type="search" 
                 placeholder="Search articles..." 
-                className="pl-10 bg-white/5 border-neutral-200/10 focus:border-neutral-300"
+                className="pl-10 bg-white border border-[#c7d2fe] focus:border-[#7c3aed] text-[#1a237e] dark:bg-[#23263a] dark:border-[#353a50] dark:text-white"
               />
             </div>
           </div>
         </section>
 
         {/* Categories Tabs */}
-        <section className="py-8 border-b border-neutral-800/30">
+  <section className="py-8 border-b border-[#e3e8f0] dark:border-[#353a50]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12 overflow-x-auto">
             <Tabs defaultValue="all" className="w-full">
               <TabsList className="bg-transparent w-full justify-start">
@@ -185,7 +184,7 @@ export default function Blog() {
                   <TabsTrigger 
                     key={category} 
                     value={category.toLowerCase()} 
-                    className="data-[state=active]:bg-neutral-800/40 data-[state=active]:text-white"
+                    className="data-[state=active]:bg-[#7c3aed] data-[state=active]:text-white text-[#3f51b5] border border-[#c7d2fe] rounded-full px-4 py-1 mx-1 dark:text-[#a5b4fc] dark:border-[#6366f1]"
                     onClick={() => setSelectedTag(category)}
                   >
                     {category}
@@ -200,15 +199,14 @@ export default function Blog() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <Reveal>
-              <h2 className="text-2xl md:text-3xl font-bold mb-8">Featured Articles</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 text-[#3f51b5] dark:text-[#a5b4fc]">Featured Articles</h2>
             </Reveal>
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {featuredArticles.map((article, index) => (
                 <Reveal key={article.id} delay={index * 100}>
-                  <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 hover-elevate transition-all overflow-hidden h-full flex flex-col">
+                  <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow-xl hover:shadow-2xl transition-all overflow-hidden h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
                     <div className="relative h-60 overflow-hidden">
-                      <Badge className="absolute top-4 left-4 z-10 bg-neutral-800/80 hover:bg-neutral-700">
+                      <Badge className="absolute top-4 left-4 z-10 bg-[#ede9fe] text-[#7c3aed] font-bold dark:bg-[#353a50] dark:text-[#a78bfa]">
                         {article.category}
                       </Badge>
                       <img 
@@ -217,15 +215,14 @@ export default function Blog() {
                         className="w-full h-full object-cover transition-transform hover:scale-105"
                         onError={(e) => {
                           // Fallback image if the specified one fails to load
-                          e.currentTarget.src = `https://placehold.co/800x400/1a1a1a/ffffff?text=${article.category}`;
+                          e.currentTarget.src = `https://placehold.co/800x400/ede9fe/7c3aed?text=${article.category}`;
                         }}
                       />
                     </div>
-                    
                     <CardContent className="flex-grow pt-6">
-                      <h3 className="text-xl font-semibold mb-2 line-clamp-2">{article.title}</h3>
-                      <p className="text-muted-foreground mb-4 line-clamp-3">{article.excerpt}</p>
-                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#1a237e] dark:text-white">{article.title}</h3>
+                      <p className="mb-4 line-clamp-3 text-[#3f51b5] dark:text-[#a5b4fc]">{article.excerpt}</p>
+                      <div className="flex items-center gap-3 text-sm text-[#5c6bc0] dark:text-[#a5b4fc]">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
                           <span>{article.date}</span>
@@ -236,27 +233,26 @@ export default function Blog() {
                         </div>
                       </div>
                     </CardContent>
-                    
-                    <CardFooter className="border-t border-neutral-200/10 pt-4">
+                    <CardFooter className="border-t border-[#e3e8f0] pt-4">
                       <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-neutral-700 overflow-hidden">
+                          <div className="w-8 h-8 rounded-full bg-[#ede9fe] overflow-hidden">
                             <img 
                               src={article.authorAvatar} 
                               alt={article.author}
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 // Fallback for avatar
-                                e.currentTarget.src = `https://placehold.co/100/1a1a1a/ffffff?text=${article.author.charAt(0)}`;
+                                e.currentTarget.src = `https://placehold.co/100/ede9fe/7c3aed?text=${article.author.charAt(0)}`;
                               }}
                             />
                           </div>
                           <div>
-                            <p className="text-sm font-medium">{article.author}</p>
-                            <p className="text-xs text-muted-foreground">{article.authorRole}</p>
+                            <p className="text-sm font-medium text-[#1a237e] dark:text-white">{article.author}</p>
+                            <p className="text-xs text-[#5c6bc0] dark:text-[#a5b4fc]">{article.authorRole}</p>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm" className="gap-1">
+                        <Button variant="ghost" size="sm" className="gap-1 text-[#7c3aed] dark:text-[#a78bfa]">
                           Read <ArrowRight className="h-4 w-4" />
                         </Button>
                       </div>
@@ -269,20 +265,19 @@ export default function Blog() {
         </section>
 
         {/* Latest Articles */}
-        <section className="py-16 bg-white/5">
+  <section className="py-16 bg-[#ede9fe]/40 dark:bg-[#23263a]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="mb-8">
               <Reveal>
-                <h2 className="text-2xl md:text-3xl font-bold">Latest Articles</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#3f51b5] dark:text-[#a5b4fc]">Latest Articles</h2>
               </Reveal>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredArticles.map((article, index) => (
                 <Reveal key={article.id} delay={index * 75}>
-                  <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 hover-elevate transition-all overflow-hidden h-full flex flex-col">
+                  <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow hover:shadow-xl transition-all overflow-hidden h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
                     <div className="relative h-48 overflow-hidden">
-                      <Badge className="absolute top-3 left-3 z-10 bg-neutral-800/80 hover:bg-neutral-700">
+                      <Badge className="absolute top-3 left-3 z-10 bg-[#ede9fe] text-[#7c3aed] font-bold dark:bg-[#353a50] dark:text-[#a78bfa]">
                         {article.category}
                       </Badge>
                       <img 
@@ -291,13 +286,12 @@ export default function Blog() {
                         className="w-full h-full object-cover transition-transform hover:scale-105"
                         onError={(e) => {
                           // Fallback image
-                          e.currentTarget.src = `https://placehold.co/600x300/1a1a1a/ffffff?text=${article.category}`;
+                          e.currentTarget.src = `https://placehold.co/600x300/ede9fe/7c3aed?text=${article.category}`;
                         }}
                       />
                     </div>
-                    
                     <CardContent className="flex-grow pt-5">
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
+                      <div className="flex items-center gap-3 text-xs text-[#5c6bc0] mb-2 dark:text-[#a5b4fc]">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           <span>{article.date}</span>
@@ -307,24 +301,21 @@ export default function Blog() {
                           <span>{article.readTime}</span>
                         </div>
                       </div>
-                      <h3 className="text-lg font-semibold mb-2 line-clamp-2">{article.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{article.excerpt}</p>
-                      
+                      <h3 className="text-lg font-semibold mb-2 line-clamp-2 text-[#1a237e] dark:text-white">{article.title}</h3>
+                      <p className="text-sm mb-3 line-clamp-2 text-[#3f51b5] dark:text-[#a5b4fc]">{article.excerpt}</p>
                       <div className="flex flex-wrap gap-2 mb-3">
                         {article.tags.map(tag => (
                           <Badge 
                             key={tag} 
-                            variant="outline" 
-                            className="text-xs border-neutral-700 bg-transparent"
+                            className="text-xs border border-[#c7d2fe] bg-[#ede9fe] text-[#7c3aed] dark:bg-[#353a50] dark:text-[#a78bfa] dark:border-[#6366f1]"
                           >
                             {tag}
                           </Badge>
                         ))}
                       </div>
                     </CardContent>
-                    
                     <CardFooter className="pt-0">
-                      <Button variant="ghost" size="sm" className="text-xs gap-1 ml-auto group">
+                      <Button variant="ghost" size="sm" className="text-xs gap-1 ml-auto group text-[#7c3aed] dark:text-[#a78bfa]">
                         Read article 
                         <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                       </Button>
@@ -333,33 +324,30 @@ export default function Blog() {
                 </Reveal>
               ))}
             </div>
-            
             {filteredArticles.length > 6 && (
               <div className="mt-12 text-center">
-                <Button variant="outline" size="lg">
-                  Load more articles
-                </Button>
+                <Button variant="outline" size="lg" className="border-[#7c3aed] text-[#7c3aed]">Load more articles</Button>
               </div>
             )}
           </div>
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-16">
+  <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <Reveal>
-              <div className="rounded-2xl bg-white/5 hover:bg-white/10 border border-neutral-200/10 p-8 md:p-10 text-center shadow-lg">
-                <h3 className="text-2xl md:text-3xl font-bold">Stay Updated with Tech Insights</h3>
-                <p className="text-foreground/80 max-w-2xl mx-auto mt-4 mb-6">
+              <div className="rounded-2xl bg-white border border-[#e3e8f0] p-8 md:p-10 text-center shadow-lg dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#1a237e] dark:text-white">Stay Updated with Tech Insights</h3>
+                <p className="text-[#3f51b5]/80 max-w-2xl mx-auto mt-4 mb-6 dark:text-[#a5b4fc]">
                   Subscribe to our newsletter and get the latest articles, updates, and relevant insights delivered to your inbox.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <Input 
                     type="email" 
                     placeholder="Enter your email" 
-                    className="bg-white/5 border-neutral-200/10"
+                    className="bg-white border border-[#c7d2fe] text-[#1a237e] dark:bg-[#23263a] dark:border-[#353a50] dark:text-white"
                   />
-                  <Button className="whitespace-nowrap">Subscribe</Button>
+                  <Button className="whitespace-nowrap bg-[#7c3aed] text-white hover:bg-[#6366f1] dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Subscribe</Button>
                 </div>
               </div>
             </Reveal>

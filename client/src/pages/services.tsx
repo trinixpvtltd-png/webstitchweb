@@ -219,29 +219,29 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
       <Navigation />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-neutral-900/70 to-background text-center py-16 md:py-20">
+  <section className="w-full bg-gradient-to-r from-[#ede9fe] via-[#c7d2fe] to-[#e9eefa] text-center py-16 md:py-20 mb-8 dark:bg-gradient-to-r dark:from-[#23263a] dark:via-[#23263a] dark:to-[#181a20]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">Our Services</h1>
+            <p className="text-lg text-[#5c6bc0] max-w-3xl mx-auto dark:text-[#a5b4fc]">
               Comprehensive digital solutions to transform your business with cutting-edge technology and exceptional design.
             </p>
           </div>
         </section>
 
         {/* Stats Section */}
-        <section className="py-12">
+  <section className="py-12">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
                 <Reveal as="div" delay={index * 75} key={stat.label}>
-                  <div className="flex items-center justify-center flex-col text-center p-6">
+                  <div className="flex items-center justify-center flex-col text-center p-6 bg-white rounded-2xl shadow-xl border border-[#e3e8f0] dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
                     <div className="mb-3">{stat.icon}</div>
-                    <h3 className="text-3xl font-bold">{stat.number}</h3>
-                    <p className="text-muted-foreground">{stat.label}</p>
+                    <h3 className="text-3xl font-extrabold text-[#1a237e] dark:text-white">{stat.number}</h3>
+                    <p className="text-[#5c6bc0] font-medium dark:text-[#a5b4fc]">{stat.label}</p>
                   </div>
                 </Reveal>
               ))}
@@ -250,32 +250,32 @@ export default function Services() {
         </section>
 
         {/* Premium Services */}
-        <section className="py-16 bg-white/5">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Our Premium Services</h2>
-              <p className="text-muted-foreground">Comprehensive digital solutions designed to transform your business.</p>
+              <h2 className="text-3xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">Our Premium Services</h2>
+              <p className="text-[#5c6bc0] dark:text-[#a5b4fc]">Comprehensive digital solutions designed to transform your business.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {premiumServices.map((service, index) => (
                 <Reveal as="div" delay={index * 100} key={service.title}>
-                  <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 hover-elevate transition-all h-full flex flex-col">
+                  <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow-xl hover:shadow-2xl transition-all h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
                     <CardHeader>
                       <div className="flex items-start justify-between">
-                        <div className="p-2 bg-neutral-800/40 rounded-lg">{service.icon}</div>
-                        <Badge variant="secondary" className="bg-neutral-800/50">{service.badge}</Badge>
+                        <div className="p-2 bg-[#ede9fe] rounded-lg dark:bg-[#353a50]">{service.icon}</div>
+                        <Badge variant="secondary" className="bg-[#7c3aed] text-white font-bold px-3 py-1 rounded-full shadow dark:bg-[#a78bfa]">{service.badge}</Badge>
                       </div>
-                      <CardTitle className="mt-4">{service.title}</CardTitle>
+                      <CardTitle className="mt-4 text-[#1a237e] font-bold dark:text-white">{service.title}</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-grow">
-                      <p className="text-foreground/80 mb-4">{service.description}</p>
+                      <p className="mb-4 text-[#3f51b5] dark:text-[#a5b4fc]">{service.description}</p>
                       <div>
-                        <h4 className="font-medium mb-2">Key Benefits:</h4>
+                        <h4 className="font-medium mb-2 text-[#1a237e] dark:text-white">Key Benefits:</h4>
                         <ul className="space-y-2">
                           {service.benefits.map((benefit, i) => (
-                            <li key={i} className="flex items-center gap-2 text-foreground/80">
-                              <div className="w-1 h-1 bg-primary rounded-full"></div>
+                            <li key={i} className="flex items-center gap-2 text-[#3f51b5] dark:text-[#a5b4fc]">
+                              <div className="w-1 h-1 bg-[#7c3aed] rounded-full dark:bg-[#a78bfa]"></div>
                               {benefit}
                             </li>
                           ))}
@@ -283,7 +283,7 @@ export default function Services() {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full">Get Started</Button>
+                      <Button className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Get Started</Button>
                     </CardFooter>
                   </Card>
                 </Reveal>
@@ -300,8 +300,8 @@ export default function Services() {
               <p className="text-muted-foreground mt-2">Use our interactive calculator to get an instant estimate for your project</p>
             </div>
 
-            <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6 md:p-10">
-              <h3 className="text-xl font-semibold mb-6">Interactive Pricing Calculator</h3>
+            <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6 md:p-10 dark:bg-[#23263a] dark:border-[#353a50]">
+              <h3 className="text-xl font-semibold mb-6 dark:text-white">Interactive Pricing Calculator</h3>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left Column - Inputs */}
@@ -376,48 +376,48 @@ export default function Services() {
                 {/* Right Column - Summary */}
                 <div className="bg-primary/5 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Project Summary</h3>
+                    <h3 className="text-lg font-semibold dark:text-white">Project Summary</h3>
                     <Button variant="ghost" size="icon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
                     </Button>
                   </div>
                   
-                  <div className="text-center my-6">
-                    <p className="text-sm text-muted-foreground mb-1">Select a service to continue</p>
-                  </div>
+                    <div className="text-center my-6">
+                      <p className="text-sm text-muted-foreground mb-1 dark:text-[#a5b4fc]">Select a service to continue</p>
+                    </div>
                   
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Base Cost</span>
-                      <span className="font-medium">₹70,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Base Cost</span>
+                      <span className="font-medium dark:text-white">₹70,000</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Additional Features</span>
-                      <span className="font-medium">₹50,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Additional Features</span>
+                      <span className="font-medium dark:text-white">₹50,000</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Technical Maintenance</span>
-                      <span className="font-medium">₹30,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Technical Maintenance</span>
+                      <span className="font-medium dark:text-white">₹30,000</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">User Testing</span>
-                      <span className="font-medium">₹20,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">User Testing</span>
+                      <span className="font-medium dark:text-white">₹20,000</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Security Audit</span>
-                      <span className="font-medium">₹15,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Security Audit</span>
+                      <span className="font-medium dark:text-white">₹15,000</span>
                     </div>
                   </div>
                   
                   <div className="border-t border-border pt-4">
                     <div className="flex items-center justify-between font-semibold">
-                      <span>Total Estimate</span>
-                      <span>₹185,000</span>
+                      <span className="dark:text-white">Total Estimate</span>
+                      <span className="dark:text-white">₹185,000</span>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">This is an estimate. Contact us for a precise quote.</p>
+                    <p className="text-xs text-muted-foreground mt-1 dark:text-[#a5b4fc]">This is an estimate. Contact us for a precise quote.</p>
                   </div>
                   
-                  <Button className="w-full mt-6">Get Full Quote</Button>
+                  <Button className="w-full mt-6 dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Get Full Quote</Button>
                 </div>
               </div>
             </div>
@@ -425,11 +425,11 @@ export default function Services() {
         </section>
 
         {/* Delivery Process */}
-        <section className="py-16 bg-white/5">
+  <section className="py-16 bg-white/5 dark:bg-[#23263a]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold mb-2">How We Deliver Excellence</h2>
-              <p className="text-muted-foreground">Our proven methodology ensures successful project delivery every time</p>
+              <h2 className="text-3xl font-bold mb-2 dark:text-white">How We Deliver Excellence</h2>
+              <p className="text-muted-foreground dark:text-[#a5b4fc]">Our proven methodology ensures successful project delivery every time</p>
             </div>
 
             {/* Service type tabs */}
@@ -465,7 +465,7 @@ export default function Services() {
               <div className="space-y-6">
                 {activeDeliveryTab === "ai" && aiSolutionsSteps.map((step, index) => (
                   <Reveal key={step.id} delay={index * 100}>
-                    <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all">
+                    <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all dark:bg-[#181a20] dark:hover:bg-[#23263a] dark:border-[#353a50]">
                       <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
                         {step.id}
                       </div>
@@ -516,7 +516,7 @@ export default function Services() {
               </div>
 
               {/* Right column - requirements analysis */}
-              <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6">
+              <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6 dark:bg-[#23263a] dark:border-[#353a50]">
                 {activeDeliveryTab === "ai" && (
                   <>
                     <div className="flex items-center gap-3 mb-6">
@@ -633,11 +633,11 @@ export default function Services() {
         </section>
 
         {/* Why Our Process Works */}
-        <section className="py-16 bg-neutral-700">
+  <section className="py-16 bg-neutral-700 dark:bg-[#181a20]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center mb-12 text-white">
-              <h2 className="text-3xl font-bold mb-2">Why Our Process Works</h2>
-              <p className="opacity-80">Our structured approach ensures consistent delivery and exceptional results</p>
+              <h2 className="text-3xl font-bold mb-2 dark:text-white">Why Our Process Works</h2>
+              <p className="opacity-80 dark:text-[#a5b4fc]">Our structured approach ensures consistent delivery and exceptional results</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -675,7 +675,7 @@ export default function Services() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-16">
+  <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-2">What Our Clients Say</h2>
@@ -685,7 +685,7 @@ export default function Services() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {testimonials.map((testimonial, index) => (
                 <Reveal key={index} delay={index * 100}>
-                  <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 h-full flex flex-col">
+                  <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 h-full flex flex-col dark:bg-[#23263a] dark:hover:bg-[#353a50] dark:border-[#353a50]">
                     <CardContent className="pt-6 flex-grow">
                       <div className="flex mb-4">
                         {[...Array(5)].map((_, i) => (
@@ -694,12 +694,12 @@ export default function Services() {
                           </svg>
                         ))}
                       </div>
-                      <p className="text-foreground/80">{testimonial.text}</p>
+                      <p className="text-foreground/80 dark:text-[#a5b4fc]">{testimonial.text}</p>
                     </CardContent>
-                    <CardFooter className="border-t border-neutral-200/10 pt-4">
+                    <CardFooter className="border-t border-neutral-200/10 pt-4 dark:border-[#353a50]">
                       <div>
-                        <div className="font-medium">{testimonial.author}</div>
-                        <div className="text-sm text-muted-foreground">{testimonial.position}</div>
+                        <div className="font-medium dark:text-white">{testimonial.author}</div>
+                        <div className="text-sm text-muted-foreground dark:text-[#a5b4fc]">{testimonial.position}</div>
                       </div>
                     </CardFooter>
                   </Card>
@@ -710,14 +710,14 @@ export default function Services() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-neutral-700">
+  <section className="py-16 bg-neutral-700 dark:bg-[#181a20]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-4">Ready to Transform Your Business?</h2>
-              <p className="text-white/80 mb-8">Let's create your digital future with innovative solutions for your unique needs.</p>
+              <h2 className="text-3xl font-bold text-white mb-4 dark:text-white">Ready to Transform Your Business?</h2>
+              <p className="text-white/80 mb-8 dark:text-[#a5b4fc]">Let's create your digital future with innovative solutions for your unique needs.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="default" className="bg-white text-neutral-900 hover:bg-white/90">Start Your Project</Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">View Our Work</Button>
+                <Button size="lg" variant="default" className="bg-white text-neutral-900 hover:bg-white/90 dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1] dark:text-white dark:hover:bg-[#7c3aed]/80">Start Your Project</Button>
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 dark:border-[#a78bfa] dark:text-[#a78bfa] dark:hover:bg-[#23263a]/80">View Our Work</Button>
               </div>
             </div>
           </div>

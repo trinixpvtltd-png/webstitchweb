@@ -39,9 +39,9 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection
-          videoSrc="https://cdn.coverr.co/videos/coverr-chipset-circuit-board-technology-1671/1080p.mp4"
-          posterSrc={heroPoster}
-          features={features}
+          
+         
+          
         />
         <StatsSection />
         <ServicesSection />
