@@ -1,9 +1,9 @@
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
-import blog1 from '@assets/stock_images/technology_business__efabd85e.jpg';
-import blog2 from '@assets/stock_images/technology_business__1ccc13d3.jpg';
-import blog3 from '@assets/stock_images/technology_business__86480d1f.jpg';
+const blog1 = '/technology_business__efabd85e.jpg';
+const blog2 = '/technology_business__1ccc13d3.jpg';
+const blog3 = '/technology_business__86480d1f.jpg';
 
 const insights = [
   {

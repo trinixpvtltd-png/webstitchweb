@@ -3,10 +3,10 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Star, CheckCircle, TrendingUp, Users, Briefcase, Smartphone, Layout, ShoppingCart, Brain } from 'lucide-react';
-import img1 from '@assets/stock_images/technology_business__1ccc13d3.jpg';
-import img2 from '@assets/stock_images/technology_business__86480d1f.jpg';
-import img3 from '@assets/stock_images/technology_business__efabd85e.jpg';
-import img4 from '@assets/stock_images/modern_technology_ab_12e17f85.jpg';
+const img1 = '/technology_business__1ccc13d3.jpg';
+const img2 = '/technology_business__86480d1f.jpg';
+const img3 = '/technology_business__efabd85e.jpg';
+const img4 = '/technology_business__1ccc13d3.jpg';
 
 const stats = [
   { icon: <Briefcase className="w-7 h-7" />, label: 'Projects Delivered', value: '150+' },

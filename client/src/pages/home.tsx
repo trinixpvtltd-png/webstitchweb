@@ -1,4 +1,5 @@
 import Navigation from '@/components/Navigation';
+import FuturisticThreeBackground from '../components/FuturisticThreeBackground';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -8,9 +9,10 @@ import FAQSection from '@/components/FAQSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import { Shield, Zap, LineChart } from 'lucide-react';
-import img1 from '@assets/stock_images/technology_business__1ccc13d3.jpg';
-import img2 from '@assets/stock_images/technology_business__86480d1f.jpg';
-import img3 from '@assets/stock_images/technology_business__efabd85e.jpg';
+// Use public folder paths for images
+const img1 = '/technology_business__1ccc13d3.jpg';
+const img2 = '/technology_business__86480d1f.jpg';
+const img3 = '/technology_business__efabd85e.jpg';
 import heroPoster from '@assets/stock_images/modern_technology_ab_12e17f85.jpg';
 
 export default function Home() {
@@ -35,22 +37,21 @@ export default function Home() {
     },
   ];
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <main>
-        <HeroSection
-          
-         
-          
-        />
-        <StatsSection />
-        <ServicesSection />
-        <TestimonialsSection />
-        <InsightsSection />
-        <FAQSection />
-        <CTASection />
-      </main>
-      <Footer />
+    <div className="min-h-screen relative overflow-hidden">
+      <FuturisticThreeBackground />
+      <div className="relative z-10">
+        <Navigation />
+        <main>
+          <HeroSection />
+          <StatsSection />
+          <ServicesSection />
+          <TestimonialsSection />
+          <InsightsSection />
+          <FAQSection />
+          <CTASection />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
