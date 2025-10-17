@@ -99,7 +99,11 @@ export default function ServicesSection() {
                 ))}
               </div>
 
-              <Button variant="ghost" className="w-full group" data-testid={`button-service-${index}`}>
+              <Button
+                className="w-full group bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"
+                data-testid={`button-service-${index}`}
+                onClick={() => window.location.href = '/contact'}
+              >
                 Get Started
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>

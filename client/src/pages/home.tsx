@@ -13,7 +13,7 @@ import { Shield, Zap, LineChart } from 'lucide-react';
 const img1 = '/technology_business__1ccc13d3.jpg';
 const img2 = '/technology_business__86480d1f.jpg';
 const img3 = '/technology_business__efabd85e.jpg';
-import heroPoster from '@assets/stock_images/modern_technology_ab_12e17f85.jpg';
+
 
 export default function Home() {
   const features = [

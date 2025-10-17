@@ -295,8 +295,21 @@ export default function About() {
             <h3 className="text-2xl md:text-3xl font-extrabold text-[#1a237e] mb-2 drop-shadow-lg dark:text-white">Ready to Work Together?</h3>
             <p className="text-[#3f51b5] mt-2 dark:text-[#a5b4fc]">Let's discuss how we can help transform your business with innovative digital solutions</p>
             <div className="mt-6 flex items-center justify-center gap-3">
-              <Button size="lg" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Start Your Project</Button>
-              <Button size="lg" variant="outline" className="border-[#7c3aed] text-[#7c3aed] hover:bg-[#ede9fe] dark:border-[#a78bfa] dark:text-[#a78bfa] dark:hover:bg-[#23263a]/80">View Our Work</Button>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"
+                onClick={() => window.location.href = '/contact'}
+              >
+                Start Your Project
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-[#7c3aed] text-[#7c3aed] hover:bg-[#ede9fe] dark:border-[#a78bfa] dark:text-[#a78bfa] dark:hover:bg-[#23263a]/80"
+                onClick={() => window.location.href = '/portfolio'}
+              >
+                View Our Work
+              </Button>
             </div>
           </div>
           </motion.div>

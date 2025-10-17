@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import StarVideoBackground from '@/components/StarVideoBackground';
 import Footer from '@/components/Footer';
@@ -220,6 +220,50 @@ export default function Services() {
     }
   ];
 
+  // Quote calculator state
+  const [selectedService, setSelectedService] = useState("");
+  const [businessSize, setBusinessSize] = useState("");
+  const [mobileApp, setMobileApp] = useState("");
+  const [requirementsText, setRequirementsText] = useState("");
+  const [complexity, setComplexity] = useState("Standard");
+  const [timeline, setTimeline] = useState("12 months");
+  const [quote, setQuote] = useState(185000);
+
+  // Quote calculation logic
+  function calculateQuote() {
+    let base = 70000;
+    let features = 50000;
+    let maintenance = 30000;
+    let testing = 20000;
+    let security = 15000;
+
+    // Service type modifier
+    if (selectedService === "AI Solutions & Machine Learning") base += 20000;
+    if (selectedService === "AI-Driven Data Analytics") base += 15000;
+
+    // Business size modifier
+    if (businessSize === "startup") base -= 10000;
+    if (businessSize === "enterprise") base += 20000;
+
+    // Mobile app modifier
+    if (mobileApp === "basic") features += 20000;
+    if (mobileApp === "advanced") features += 40000;
+
+    // Complexity modifier
+    if (complexity === "Basic") base -= 10000;
+    if (complexity === "Advanced") base += 20000;
+
+    // Timeline modifier
+    if (timeline === "3 months") base += 10000;
+    if (timeline === "6 months") base += 5000;
+
+    return base + features + maintenance + testing + security;
+  }
+
+  // Update quote when inputs change
+  useEffect(() => {
+    setQuote(calculateQuote());
+  }, [selectedService, businessSize, mobileApp, complexity, timeline]);
   return (
     <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
       <StarVideoBackground />
@@ -319,7 +363,12 @@ export default function Services() {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Get Started</Button>
+                      <Button
+                        className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"
+                        onClick={() => window.location.href = '/contact'}
+                      >
+                        Get Started
+                      </Button>
                     </CardFooter>
                   </Card>
                 </Reveal>
@@ -344,13 +393,13 @@ export default function Services() {
                 <div className="lg:col-span-2 space-y-6">
                   <div>
                     <label className="block mb-2 text-sm font-medium">Select Service</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose a service" />
+                    <Select value={selectedService} onValueChange={setSelectedService}>
+                      <SelectTrigger className="bg-white text-black border border-white focus:ring-2 focus:ring-[#7c3aed]">
+                        <SelectValue placeholder="Choose a service" className="text-black" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white text-black">
                         {premiumServices.map((service) => (
-                          <SelectItem key={service.title} value={service.title}>{service.title}</SelectItem>
+                          <SelectItem key={service.title} value={service.title} className="bg-white text-black hover:bg-[#ede9fe]">{service.title}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -358,53 +407,53 @@ export default function Services() {
                   
                   <div>
                     <label className="block mb-2 text-sm font-medium">Business Size</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select business size" />
+                    <Select value={businessSize} onValueChange={setBusinessSize}>
+                      <SelectTrigger className="bg-white text-black border border-white focus:ring-2 focus:ring-[#7c3aed]">
+                        <SelectValue placeholder="Select business size" className="text-black" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="startup">Startup (1-10 employees)</SelectItem>
-                        <SelectItem value="small">Small Business (11-50 employees)</SelectItem>
-                        <SelectItem value="medium">Medium Business (51-200 employees)</SelectItem>
-                        <SelectItem value="enterprise">Enterprise (200+ employees)</SelectItem>
+                      <SelectContent className="bg-white text-black">
+                        <SelectItem value="startup" className="bg-white text-black hover:bg-[#ede9fe]">Startup (1-10 employees)</SelectItem>
+                        <SelectItem value="small" className="bg-white text-black hover:bg-[#ede9fe]">Small Business (11-50 employees)</SelectItem>
+                        <SelectItem value="medium" className="bg-white text-black hover:bg-[#ede9fe]">Medium Business (51-200 employees)</SelectItem>
+                        <SelectItem value="enterprise" className="bg-white text-black hover:bg-[#ede9fe]">Enterprise (200+ employees)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div>
                     <label className="block mb-2 text-sm font-medium">Mobile App</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select option" />
+                    <Select value={mobileApp} onValueChange={setMobileApp}>
+                      <SelectTrigger className="bg-white text-black border border-white focus:ring-2 focus:ring-[#7c3aed]">
+                        <SelectValue placeholder="Select option" className="text-black" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">Not Required</SelectItem>
-                        <SelectItem value="basic">Basic App</SelectItem>
-                        <SelectItem value="advanced">Advanced App</SelectItem>
+                      <SelectContent className="bg-white text-black">
+                        <SelectItem value="none" className="bg-white text-black hover:bg-[#ede9fe]">Not Required</SelectItem>
+                        <SelectItem value="basic" className="bg-white text-black hover:bg-[#ede9fe]">Basic App</SelectItem>
+                        <SelectItem value="advanced" className="bg-white text-black hover:bg-[#ede9fe]">Advanced App</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div>
                     <label className="block mb-2 text-sm font-medium">Additional Requirements</label>
-                    <Textarea placeholder="Describe any specific requirements or features you need" />
+                    <Textarea className='bg-white text-black' value={requirementsText} onChange={e => setRequirementsText(e.target.value)} placeholder="Describe any specific requirements or features you need" />
                   </div>
                   
                   <div>
                     <label className="block mb-2 text-sm font-medium">Project Complexity</label>
                     <div className="grid grid-cols-3 gap-2">
-                      <Button variant="outline" className="w-full">Basic</Button>
-                      <Button variant="secondary" className="w-full">Standard</Button>
-                      <Button variant="outline" className="w-full">Advanced</Button>
+                      <Button variant={complexity === "Basic" ? "secondary" : "outline"} className="w-full" onClick={() => setComplexity("Basic")}>Basic</Button>
+                      <Button variant={complexity === "Standard" ? "secondary" : "outline"} className="w-full" onClick={() => setComplexity("Standard")}>Standard</Button>
+                      <Button variant={complexity === "Advanced" ? "secondary" : "outline"} className="w-full" onClick={() => setComplexity("Advanced")}>Advanced</Button>
                     </div>
                   </div>
                   
                   <div>
                     <label className="block mb-2 text-sm font-medium">Timeline</label>
                     <div className="grid grid-cols-3 gap-2">
-                      <Button variant="outline" className="w-full">3 months</Button>
-                      <Button variant="outline" className="w-full">6 months</Button>
-                      <Button variant="secondary" className="w-full">12 months</Button>
+                      <Button variant={timeline === "3 months" ? "secondary" : "outline"} className="w-full" onClick={() => setTimeline("3 months")}>3 months</Button>
+                      <Button variant={timeline === "6 months" ? "secondary" : "outline"} className="w-full" onClick={() => setTimeline("6 months")}>6 months</Button>
+                      <Button variant={timeline === "12 months" ? "secondary" : "outline"} className="w-full" onClick={() => setTimeline("12 months")}>12 months</Button>
                     </div>
                   </div>
                 </div>
@@ -413,47 +462,38 @@ export default function Services() {
                 <div className="bg-primary/5 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold dark:text-white">Project Summary</h3>
-                    <Button variant="ghost" size="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
-                    </Button>
                   </div>
-                  
-                    <div className="text-center my-6">
-                      <p className="text-sm text-muted-foreground mb-1 dark:text-[#a5b4fc]">Select a service to continue</p>
-                    </div>
-                  
+                  <div className="text-center my-6">
+                    <p className="text-sm text-muted-foreground mb-1 dark:text-[#a5b4fc]">
+                      {selectedService ? selectedService : "Select a service to continue"}
+                    </p>
+                  </div>
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm dark:text-[#a5b4fc]">Base Cost</span>
-                      <span className="font-medium dark:text-white">₹70,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Business Size</span>
+                      <span className="font-medium dark:text-white">{businessSize || "-"}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm dark:text-[#a5b4fc]">Additional Features</span>
-                      <span className="font-medium dark:text-white">₹50,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Mobile App</span>
+                      <span className="font-medium dark:text-white">{mobileApp || "-"}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm dark:text-[#a5b4fc]">Technical Maintenance</span>
-                      <span className="font-medium dark:text-white">₹30,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Complexity</span>
+                      <span className="font-medium dark:text-white">{complexity}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm dark:text-[#a5b4fc]">User Testing</span>
-                      <span className="font-medium dark:text-white">₹20,000</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm dark:text-[#a5b4fc]">Security Audit</span>
-                      <span className="font-medium dark:text-white">₹15,000</span>
+                      <span className="text-sm dark:text-[#a5b4fc]">Timeline</span>
+                      <span className="font-medium dark:text-white">{timeline}</span>
                     </div>
                   </div>
-                  
                   <div className="border-t border-border pt-4">
                     <div className="flex items-center justify-between font-semibold">
                       <span className="dark:text-white">Total Estimate</span>
-                      <span className="dark:text-white">₹185,000</span>
+                      <span className="dark:text-white">₹{quote.toLocaleString()}</span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1 dark:text-[#a5b4fc]">This is an estimate. Contact us for a precise quote.</p>
                   </div>
-                  
-                  <Button className="w-full mt-6 dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]">Get Full Quote</Button>
+                  <Button className="w-full mt-6 dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]" onClick={() => alert(`Your estimated quote is ₹${quote.toLocaleString()}`)}>Get Full Quote</Button>
                 </div>
               </div>
             </div>
@@ -472,7 +512,7 @@ export default function Services() {
             <div className="flex flex-wrap justify-center gap-4 mb-10">
               <Button 
                 variant={activeDeliveryTab === "ai" ? "default" : "outline"} 
-                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "ai" ? "bg-neutral-800 hover:bg-neutral-700" : ""}`}
+                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "ai" ? "bg-neutral-100 hover:bg-neutral-700" : ""}`}
                 onClick={() => setActiveDeliveryTab("ai")}
               >
                 <BrainCircuit className="h-5 w-5" />
@@ -480,7 +520,7 @@ export default function Services() {
               </Button>
               <Button 
                 variant={activeDeliveryTab === "web" ? "default" : "outline"} 
-                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "web" ? "bg-neutral-800 hover:bg-neutral-700" : ""}`}
+                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "web" ? "bg-neutral-100 hover:bg-neutral-700" : ""}`}
                 onClick={() => setActiveDeliveryTab("web")}
               >
                 <Globe2 className="h-5 w-5" />
@@ -488,7 +528,7 @@ export default function Services() {
               </Button>
               <Button 
                 variant={activeDeliveryTab === "mobile" ? "default" : "outline"} 
-                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "mobile" ? "bg-neutral-800 hover:bg-neutral-700" : ""}`}
+                className={`flex items-center gap-2 min-w-[160px] ${activeDeliveryTab === "mobile" ? "bg-neutral-100 hover:bg-neutral-700" : ""}`}
                 onClick={() => setActiveDeliveryTab("mobile")}
               >
                 <MonitorSmartphone className="h-5 w-5" />
@@ -501,7 +541,7 @@ export default function Services() {
               <div className="space-y-6">
                 {activeDeliveryTab === "ai" && aiSolutionsSteps.map((step, index) => (
                   <Reveal key={step.id} delay={index * 100}>
-                    <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all dark:bg-[#181a20] dark:hover:bg-[#23263a] dark:border-[#353a50]">
+                    <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all dark:hover:bg-[#23263a] dark:border-[#353a50]">
                       <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
                         {step.id}
                       </div>

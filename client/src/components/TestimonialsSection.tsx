@@ -1,9 +1,9 @@
 import { Card } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 import { useState } from 'react';
-const avatar1 = '/professional_busines_fd08bdf3.jpg';
-const avatar2 = '/professional_busines_e2755571.jpg';
-const avatar3 = '/professional_busines_6bc32d7b.jpg';
+const avatar1 = 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=128&h=128&facepad=2';
+const avatar2 = 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=128&h=128&facepad=2';
+const avatar3 = 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=128&h=128&facepad=2';
 
 const testimonials = [
   {
