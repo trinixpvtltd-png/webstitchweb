@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
@@ -47,9 +47,10 @@ export default function Navigation() {
             <a href="/blog" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-blog">
               Blog
             </a>
-            <a href="/careers" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-careers">
+           {/* <a href="/careers" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-careers">
               Careers
-            </a>
+            </a> */}
+          
             <a href="/contact" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-contact">
               Contact
             </a>
@@ -57,7 +58,7 @@ export default function Navigation() {
           </div>
 
           <div className="hidden md:flex items-center gap-2">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <Button size="sm" data-testid="button-cta">
               Get Started
             </Button>

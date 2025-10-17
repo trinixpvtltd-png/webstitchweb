@@ -1,4 +1,5 @@
 import Navigation from '@/components/Navigation';
+import StarVideoBackground from '@/components/StarVideoBackground';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -106,25 +107,32 @@ const allProjects = [
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
+    <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
+      <StarVideoBackground />
       <Navigation />
-      <main className="pt-20 pb-12">
+      <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Header */}
-        <section className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-[#1a237e] drop-shadow-lg dark:text-white">Our Portfolio</h1>
-          <p className="text-lg text-[#5c6bc0] mb-2 font-medium dark:text-[#a5b4fc]">WebStitch - powered by Trinix Pvt Ltd</p>
-          <p className="text-base text-[#3f51b5] max-w-2xl mx-auto dark:text-[#a5b4fc]">Showcasing our finest work – innovative solutions that drive real business results</p>
+        <section className="w-full flex flex-col items-center justify-center min-h-[40vh] px-4 mb-12">
+          <div className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4">Our Portfolio</h1>
+            <p className="mt-2 text-lg text-[#a5b4fc]">WebStitch - powered by Trinix Pvt Ltd</p>
+            <p className="mt-6 text-xl md:text-2xl text-[#e3e8f0] max-w-2xl mx-auto">Showcasing our finest work – innovative solutions that drive real business results</p>
+          </div>
         </section>
 
         {/* Stats */}
-        <section className="flex flex-wrap justify-center gap-8 mb-10">
-          {stats.map((stat, i) => (
-            <div key={i} className="flex flex-col items-center bg-white/90 rounded-2xl px-10 py-7 min-w-[180px] shadow-xl border border-[#e3e8f0] dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
-              <div className="mb-2 text-[#5c6bc0] dark:text-[#a5b4fc]">{stat.icon}</div>
-              <div className="text-2xl font-extrabold text-[#1a237e] drop-shadow dark:text-white">{stat.value}</div>
-              <div className="text-[#5c6bc0] text-sm mt-1 font-medium dark:text-[#a5b4fc]">{stat.label}</div>
-            </div>
-          ))}
+        <section className="max-w-7xl mx-auto px-6 lg:px-12 mt-6 mb-10 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, i) => (
+              <div key={i} className="flex flex-col justify-between h-full bg-[#23263a] rounded-2xl shadow-xl border-none px-8 py-10 text-center dark:bg-[#23263a]" style={{minHeight:'220px'}}>
+                <div className="flex justify-center mb-6">{stat.icon}</div>
+                <div>
+                  <div className="text-4xl font-extrabold text-white mb-2" style={{fontFamily:'inherit'}}>{stat.value}</div>
+                  <div className="text-lg font-medium text-[#a5b4fc]" style={{fontFamily:'inherit'}}>{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Filters */}

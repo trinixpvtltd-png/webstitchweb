@@ -9,7 +9,7 @@ import About from "@/pages/about";
 import Services from "@/pages/services";
 import Blog from "@/pages/blog";
 import Portfolio from "@/pages/portfolio";
-import Careers from "@/pages/careers";
+//import Careers from "@/pages/careers";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 
@@ -21,7 +21,7 @@ function Router() {
     <Route path="/about" component={About} />
     <Route path="/services" component={Services} />
     <Route path="/portfolio" component={Portfolio} />
-    <Route path="/careers" component={Careers} />
+   {/* <Route path="/careers" component={Careers} /> */}
     <Route path="/blog" component={Blog} />
     <Route path="/contact" component={Contact} />
     <Route component={NotFound} />

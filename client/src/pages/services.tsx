@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import Navigation from '@/components/Navigation';
+import StarVideoBackground from '@/components/StarVideoBackground';
 import Footer from '@/components/Footer';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { BrainCircuit, Cpu, Database, Code, BarChart3, Globe2, MonitorSmartphone, Zap } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { BrainCircuit, Cpu, Database, Code, BarChart3, Globe2, MonitorSmartphone, Zap, Heart, Sparkles, BadgeCheck } from 'lucide-react';
 import Reveal from '@/components/Reveal';
+import { motion } from 'framer-motion';
 
 export default function Services() {
+  // Stats for achievements
   const stats = [
     { number: '150+', label: 'Projects Completed', icon: <Zap className="h-10 w-10 text-primary" /> },
     { number: '50+', label: 'Expert Specialists', icon: <Globe2 className="h-10 w-10 text-primary" /> },
@@ -219,33 +221,67 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
+    <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
+      <StarVideoBackground />
       <Navigation />
-      <main className="pt-20">
+      <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Hero Section */}
-  <section className="w-full bg-gradient-to-r from-[#ede9fe] via-[#c7d2fe] to-[#e9eefa] text-center py-16 md:py-20 mb-8 dark:bg-gradient-to-r dark:from-[#23263a] dark:via-[#23263a] dark:to-[#181a20]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">Our Services</h1>
-            <p className="text-lg text-[#5c6bc0] max-w-3xl mx-auto dark:text-[#a5b4fc]">
+        <section className="w-full flex flex-col items-center justify-center min-h-[60vh] px-4">
+          <motion.div
+            className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 60, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, ease: 'easeOut' }}
+          >
+            <motion.h1
+              className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 1, ease: 'easeOut' }}
+            >
+              Our Services
+            </motion.h1>
+            <motion.p
+              className="mt-2 text-lg text-[#a5b4fc]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 1, ease: 'easeOut' }}
+            >
+              powered by Trinix Pvt Ltd
+            </motion.p>
+            <motion.p
+              className="mt-6 text-xl md:text-2xl text-[#e3e8f0] max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 1, ease: 'easeOut' }}
+            >
               Comprehensive digital solutions to transform your business with cutting-edge technology and exceptional design.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </section>
 
-        {/* Stats Section */}
-  <section className="py-12">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
-                <Reveal as="div" delay={index * 75} key={stat.label}>
-                  <div className="flex items-center justify-center flex-col text-center p-6 bg-white rounded-2xl shadow-xl border border-[#e3e8f0] dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
-                    <div className="mb-3">{stat.icon}</div>
-                    <h3 className="text-3xl font-extrabold text-[#1a237e] dark:text-white">{stat.number}</h3>
-                    <p className="text-[#5c6bc0] font-medium dark:text-[#a5b4fc]">{stat.label}</p>
+        {/* ...existing code... (timeline section removed) */}
+
+        {/* Achievements Section (Stats) */}
+        <section className="max-w-7xl mx-auto px-6 lg:px-12 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                viewport={{ once: true }}
+              >
+                <div className="flex flex-col justify-between h-full bg-[#23263a] rounded-2xl shadow-xl border-none px-8 py-10 text-center dark:bg-[#23263a]" style={{minHeight:'260px'}}>
+                  <div className="flex justify-center mb-6">{stat.icon}</div>
+                  <div>
+                    <div className="text-5xl font-extrabold text-white mb-2" style={{fontFamily:'inherit'}}>{stat.number}</div>
+                    <div className="text-lg font-medium text-[#a5b4fc] mb-8" style={{fontFamily:'inherit'}}>{stat.label}</div>
                   </div>
-                </Reveal>
-              ))}
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </section>
 

@@ -1,4 +1,5 @@
 import Navigation from '@/components/Navigation';
+import StarVideoBackground from '@/components/StarVideoBackground';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -6,14 +7,17 @@ import { Phone, Mail, MapPin, MessageCircle, Star, Users, CheckCircle, Clock, In
 
 export default function Contact() {
   return (
-  <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
+  <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
+      <StarVideoBackground />
       <Navigation />
-      <main className="pt-20 pb-12">
+      <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Hero Section */}
-  <section className="w-full bg-gradient-to-r from-[#ede9fe] via-[#c7d2fe] to-[#e9eefa] py-16 text-center mb-12 dark:bg-gradient-to-r dark:from-[#23263a] dark:via-[#23263a] dark:to-[#181a20]">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-[#1a237e] drop-shadow-lg tracking-tight dark:text-white">Ready to Transform Your Business?</h1>
-          <p className="text-lg text-[#5c6bc0] mb-2 font-medium dark:text-[#a5b4fc]">WebStitch - powered by Trinix Pvt Ltd</p>
-          <p className="text-base text-[#3f51b5] max-w-2xl mx-auto dark:text-[#a5b4fc]">Get a free consultation and discover how our AI-powered solutions can revolutionize your operations and drive unprecedented growth.</p>
+        <section className="w-full flex flex-col items-center justify-center min-h-[40vh] px-4 mb-12">
+          <div className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4">Ready to Transform Your Business?</h1>
+            <p className="mt-2 text-lg text-[#a5b4fc]">WebStitch - powered by Trinix Pvt Ltd</p>
+            <p className="mt-6 text-xl md:text-2xl text-[#e3e8f0] max-w-2xl mx-auto">Get a free consultation and discover how our AI-powered solutions can revolutionize your operations and drive unprecedented growth.</p>
+          </div>
         </section>
 
         {/* Contact Info Cards */}

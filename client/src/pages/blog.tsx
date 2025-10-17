@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Navigation from '@/components/Navigation';
+import StarVideoBackground from '@/components/StarVideoBackground';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -153,18 +154,16 @@ export default function Blog() {
     : latestArticles.filter(article => article.tags.includes(selectedTag) || article.category === selectedTag);
 
   return (
-  <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] to-[#e9eefa] text-[#1a237e] dark:bg-gradient-to-br dark:from-[#181a20] dark:to-[#23263a] dark:text-[#e3e8f0]">
-      <Navigation />
-      <main className="pt-20">
+  <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
+    <StarVideoBackground />
+    <Navigation />
+    <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Hero Section */}
-  <section className="bg-gradient-to-b from-[#ede9fe] to-[#e9eefa] text-center py-16 md:py-20 dark:bg-gradient-to-b dark:from-[#23263a] dark:to-[#181a20]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">Tech Insights & Trends</h1>
-            <p className="text-lg text-[#5c6bc0] max-w-3xl mx-auto dark:text-[#a5b4fc]">
-              Stay ahead of the curve with expert insights on web development, digital marketing, and emerging technologies from the WebStitch team.
-            </p>
-            {/* Search bar */}
-            <div className="relative max-w-lg mx-auto mt-8">
+        <section className="w-full flex flex-col items-center justify-center min-h-[40vh] px-4 mb-12">
+          <div className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4">Tech Insights & Trends</h1>
+            <p className="mt-2 text-lg text-[#a5b4fc]">Stay ahead of the curve with expert insights on web development, digital marketing, and emerging technologies from the WebStitch team.</p>
+            <div className="relative max-w-lg mx-auto mt-8 w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#7c3aed]" />
               <Input 
                 type="search" 
@@ -265,8 +264,8 @@ export default function Blog() {
         </section>
 
         {/* Latest Articles */}
-  <section className="py-16 bg-[#ede9fe]/40 dark:bg-[#23263a]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+  <section className="py-16 bg-transparent">
+    <div className="max-w-7xl mx-auto px-6 lg:px-12 bg-[#23263a]/80 rounded-3xl p-8" style={{backdropFilter:'blur(2px)'}}>
             <div className="mb-8">
               <Reveal>
                 <h2 className="text-2xl md:text-3xl font-bold text-[#3f51b5] dark:text-[#a5b4fc]">Latest Articles</h2>
@@ -275,7 +274,7 @@ export default function Blog() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredArticles.map((article, index) => (
                 <Reveal key={article.id} delay={index * 75}>
-                  <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow hover:shadow-xl transition-all overflow-hidden h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
+                  <Card className="bg-white/10 backdrop-blur-md rounded-2xl border border-[#e3e8f0]/30 shadow hover:shadow-xl transition-all overflow-hidden h-full flex flex-col dark:bg-[#23263a]/30 dark:border-[#353a50]/30 dark:shadow-2xl">
                     <div className="relative h-48 overflow-hidden">
                       <Badge className="absolute top-3 left-3 z-10 bg-[#ede9fe] text-[#7c3aed] font-bold dark:bg-[#353a50] dark:text-[#a78bfa]">
                         {article.category}
