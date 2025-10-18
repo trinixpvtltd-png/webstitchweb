@@ -38,6 +38,7 @@ const AdminDashboard = () => {
     keyBenefits: '', // comma separated
     isPopular: false,
     icon: '',
+    tag: '',
     ctaText: 'Get Started',
   });
   // Edit modal state
@@ -49,6 +50,7 @@ const AdminDashboard = () => {
     keyBenefits: '',
     isPopular: false,
     icon: '',
+    tag: '',
     ctaText: 'Get Started',
   });
   const [editServiceLoading, setEditServiceLoading] = useState(false);
@@ -70,7 +72,7 @@ const AdminDashboard = () => {
       const newService = await addService(service);
       setServices([...services, newService]);
       setShowServiceModal(false);
-      setServiceForm({ title: '', description: '', keyBenefits: '', isPopular: false, icon: '', ctaText: 'Get Started' });
+      setServiceForm({ title: '', description: '', keyBenefits: '', isPopular: false, icon: '', tag: '', ctaText: 'Get Started' });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -190,6 +192,7 @@ const AdminDashboard = () => {
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Key Benefits (comma separated)" required value={serviceForm.keyBenefits} onChange={e => setServiceForm(f => ({ ...f, keyBenefits: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Icon URL (optional)" value={serviceForm.icon} onChange={e => setServiceForm(f => ({ ...f, icon: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="CTA Text" value={serviceForm.ctaText} onChange={e => setServiceForm(f => ({ ...f, ctaText: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tag" value={serviceForm.tag} onChange={e => setServiceForm(f => ({ ...f, tag: e.target.value }))} />
                         <label className="flex items-center gap-2 text-white">
                           <input type="checkbox" checked={serviceForm.isPopular} onChange={e => setServiceForm(f => ({ ...f, isPopular: e.target.checked }))} />
                           Popular Service
@@ -202,64 +205,13 @@ const AdminDashboard = () => {
                   </div>
                 )}
                 <div className="overflow-x-auto">
-                {/* Edit Project Modal */}
-                {showEditProjectModal && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-                    <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10">
-                      <button className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl" onClick={() => setShowEditProjectModal(false)}>&times;</button>
-                      <h3 className="text-xl font-bold mb-4 text-center text-[#7c3aed]">Edit Project</h3>
-                      <form onSubmit={e => { e.preventDefault(); handleEditProject(editProjectId!, {
-                        ...editProjectForm,
-                        tags: editProjectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
-                      }); }} className="flex flex-col gap-4">
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Title" required value={editProjectForm.title} onChange={e => setEditProjectForm(f => ({ ...f, title: e.target.value }))} />
-                        <textarea className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Description" required value={editProjectForm.description} onChange={e => setEditProjectForm(f => ({ ...f, description: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Image URL (optional)" value={editProjectForm.image} onChange={e => setEditProjectForm(f => ({ ...f, image: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={editProjectForm.tags} onChange={e => setEditProjectForm(f => ({ ...f, tags: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Project Link (optional)" value={editProjectForm.link} onChange={e => setEditProjectForm(f => ({ ...f, link: e.target.value }))} />
-                        <label className="flex items-center gap-2 text-white">
-                          <input type="checkbox" checked={editProjectForm.isFeatured} onChange={e => setEditProjectForm(f => ({ ...f, isFeatured: e.target.checked }))} />
-                          Featured Project
-                        </label>
-                        <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={editProjectLoading}>
-                          {editProjectLoading ? 'Saving...' : 'Save Changes'}
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                )}
-                {/* Edit Project Modal */}
-                {showEditProjectModal && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-                    <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10">
-                      <button className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl" onClick={() => setShowEditProjectModal(false)}>&times;</button>
-                      <h3 className="text-xl font-bold mb-4 text-center text-[#7c3aed]">Edit Project</h3>
-                      <form onSubmit={e => { e.preventDefault(); handleEditProject(editProjectId!, {
-                        ...editProjectForm,
-                        tags: editProjectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
-                      }); }} className="flex flex-col gap-4">
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Title" required value={editProjectForm.title} onChange={e => setEditProjectForm(f => ({ ...f, title: e.target.value }))} />
-                        <textarea className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Description" required value={editProjectForm.description} onChange={e => setEditProjectForm(f => ({ ...f, description: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Image URL (optional)" value={editProjectForm.image} onChange={e => setEditProjectForm(f => ({ ...f, image: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={editProjectForm.tags} onChange={e => setEditProjectForm(f => ({ ...f, tags: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Project Link (optional)" value={editProjectForm.link} onChange={e => setEditProjectForm(f => ({ ...f, link: e.target.value }))} />
-                        <label className="flex items-center gap-2 text-white">
-                          <input type="checkbox" checked={editProjectForm.isFeatured} onChange={e => setEditProjectForm(f => ({ ...f, isFeatured: e.target.checked }))} />
-                          Featured Project
-                        </label>
-                        <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={editProjectLoading}>
-                          {editProjectLoading ? 'Saving...' : 'Save Changes'}
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                )}
                   <div className="rounded-2xl shadow-2xl bg-gradient-to-br from-[#23263a]/80 to-[#6366f1]/10 p-2">
                     <table className="w-full border-separate border-spacing-y-2">
                       <thead>
                         <tr className="bg-white/10 text-[#a5b4fc] rounded-xl">
                           <th className="p-4 text-lg text-center">Title</th>
                           <th className="p-4 text-lg text-center">Description</th>
+                          <th className="p-4 text-lg text-center">Tag</th>
                           <th className="p-4 text-lg text-center">Actions</th>
                         </tr>
                       </thead>
@@ -268,6 +220,7 @@ const AdminDashboard = () => {
                           <tr key={service._id} className="rounded-xl bg-black/60 hover:bg-white/10 transition shadow-xl">
                             <td className="p-4 rounded-l-xl font-semibold text-white/90 text-center">{service.title}</td>
                             <td className="p-4 text-white/80 text-center">{service.description}</td>
+                            <td className="p-4 text-white/80 text-center">{service.tag}</td>
                             <td className="p-4 flex gap-2 rounded-r-xl justify-center">
                               <button className="px-4 py-2 bg-blue-500/80 text-white rounded-lg hover:bg-blue-600 transition font-semibold" onClick={() => {
                                 setEditServiceId(service._id);
@@ -277,6 +230,7 @@ const AdminDashboard = () => {
                                   keyBenefits: Array.isArray(service.keyBenefits) ? service.keyBenefits.join(', ') : service.keyBenefits || '',
                                   isPopular: service.isPopular || false,
                                   icon: service.icon || '',
+                                  tag: service.tag || '',
                                   ctaText: service.ctaText || 'Get Started',
                                 });
                                 setShowEditServiceModal(true);
@@ -298,6 +252,7 @@ const AdminDashboard = () => {
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Key Benefits (comma separated)" required value={editServiceForm.keyBenefits} onChange={e => setEditServiceForm(f => ({ ...f, keyBenefits: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Icon URL (optional)" value={editServiceForm.icon} onChange={e => setEditServiceForm(f => ({ ...f, icon: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="CTA Text" value={editServiceForm.ctaText} onChange={e => setEditServiceForm(f => ({ ...f, ctaText: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={editServiceForm.tag} onChange={e => setEditServiceForm(f => ({ ...f, tag: e.target.value }))} />
                         <label className="flex items-center gap-2 text-white">
                           <input type="checkbox" checked={editServiceForm.isPopular} onChange={e => setEditServiceForm(f => ({ ...f, isPopular: e.target.checked }))} />
                           Popular Service
@@ -349,6 +304,32 @@ const AdminDashboard = () => {
                         </label>
                         <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={projectLoading}>
                           {projectLoading ? 'Creating...' : 'Create Project'}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+                {/* Edit Project Modal */}
+                {showEditProjectModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                    <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10">
+                      <button className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl" onClick={() => setShowEditProjectModal(false)}>&times;</button>
+                      <h3 className="text-xl font-bold mb-4 text-center text-[#7c3aed]">Edit Project</h3>
+                      <form onSubmit={e => { e.preventDefault(); handleEditProject(editProjectId!, {
+                        ...editProjectForm,
+                        tags: editProjectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+                      }); }} className="flex flex-col gap-4">
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Title" required value={editProjectForm.title} onChange={e => setEditProjectForm(f => ({ ...f, title: e.target.value }))} />
+                        <textarea className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Description" required value={editProjectForm.description} onChange={e => setEditProjectForm(f => ({ ...f, description: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Image URL (optional)" value={editProjectForm.image} onChange={e => setEditProjectForm(f => ({ ...f, image: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={editProjectForm.tags} onChange={e => setEditProjectForm(f => ({ ...f, tags: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Project Link (optional)" value={editProjectForm.link} onChange={e => setEditProjectForm(f => ({ ...f, link: e.target.value }))} />
+                        <label className="flex items-center gap-2 text-white">
+                          <input type="checkbox" checked={editProjectForm.isFeatured} onChange={e => setEditProjectForm(f => ({ ...f, isFeatured: e.target.checked }))} />
+                          Featured Project
+                        </label>
+                        <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={editProjectLoading}>
+                          {editProjectLoading ? 'Saving...' : 'Save Changes'}
                         </button>
                       </form>
                     </div>

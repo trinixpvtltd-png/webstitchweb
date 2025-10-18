@@ -3,9 +3,9 @@ const Service = require('../modals/service_modal');
 // Create a new service (admin only)
 exports.createService = async (req, res) => {
   try {
-    const service = new Service(req.body);
-    await service.save();
-    res.status(201).json(service);
+  const service = new Service(req.body);
+  await service.save();
+  res.status(201).json(service);
   } catch (error) {
     res.status(400).json({ message: 'Error creating service', error });
   }
@@ -14,9 +14,9 @@ exports.createService = async (req, res) => {
 // Update a service (admin only)
 exports.updateService = async (req, res) => {
   try {
-    const service = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!service) return res.status(404).json({ message: 'Service not found' });
-    res.json(service);
+  const service = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!service) return res.status(404).json({ message: 'Service not found' });
+  res.json(service);
   } catch (error) {
     res.status(400).json({ message: 'Error updating service', error });
   }

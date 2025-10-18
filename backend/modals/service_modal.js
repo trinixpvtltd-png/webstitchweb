@@ -5,7 +5,8 @@ const serviceSchema = new mongoose.Schema({
   description: { type: String, required: true },
   keyBenefits: [{ type: String, required: true }],
   isPopular: { type: Boolean, default: false },
-  icon: { type: String }, 
+  icon: { type: String },
+  tag: [{ type: String }],
   ctaText: { type: String, default: "Get Started" }
 }, { timestamps: true });
 
