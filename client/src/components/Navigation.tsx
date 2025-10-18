@@ -17,17 +17,28 @@ export default function Navigation() {
 
   // Check login state from localStorage
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('token'));
-    const handleStorage = () => setIsLoggedIn(!!localStorage.getItem('token'));
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('userRole');
+    setIsLoggedIn(!!token);
+    setUserRole(role);
+    const handleStorage = () => {
+      const newToken = localStorage.getItem('token');
+      const newRole = localStorage.getItem('userRole');
+      setIsLoggedIn(!!newToken);
+      setUserRole(newRole);
+    };
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
     setIsLoggedIn(false);
+    setUserRole(null);
     window.location.href = '/home';
   };
 
@@ -73,6 +84,11 @@ export default function Navigation() {
 
           <div className="hidden md:flex items-center gap-2">
             {/* <ThemeToggle /> */}
+            {isLoggedIn && userRole === 'admin' && (
+              <Button size="sm" variant="outline" onClick={() => window.location.href = '/admin_dashboard'}>
+                Admin Dashboard
+              </Button>
+            )}
             {!isLoggedIn ? (
               <Button size="sm" data-testid="button-cta" onClick={() => window.location.href = '/login'}>
                 Get Started
@@ -123,6 +139,11 @@ export default function Navigation() {
               <a href="/contact" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-contact">
                 Contact
               </a>
+              {isLoggedIn && userRole === 'admin' && (
+                <Button size="sm" className="mt-2" variant="outline" onClick={() => window.location.href = '/admin_dashboard'}>
+                  Admin Dashboard
+                </Button>
+              )}
               {!isLoggedIn ? (
                 <Button size="sm" className="mt-2" data-testid="button-mobile-cta" onClick={() => window.location.href = '/login'}>
                   Get Started

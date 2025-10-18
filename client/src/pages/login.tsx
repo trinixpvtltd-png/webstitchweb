@@ -17,6 +17,7 @@ const LoginPage = () => {
       const data = await loginUser(email, password);
       if (data.token) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userRole', data.user?.role || 'user');
       }
       if (data.user?.role === 'admin') {
         window.location.href = '/admin_dashboard';

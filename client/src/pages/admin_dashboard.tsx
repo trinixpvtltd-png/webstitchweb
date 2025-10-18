@@ -12,8 +12,8 @@ const AdminDashboard = () => {
     description: '',
     image: '',
     tags: '',
-    link: '',
-    isFeatured: true,
+    techStack: '',
+    isFeatured: false,
   });
   const [editProjectLoading, setEditProjectLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'services' | 'projects'>('services');
@@ -27,8 +27,8 @@ const AdminDashboard = () => {
     description: '',
     image: '',
     tags: '', // comma separated
-    link: '',
-    isFeatured: true,
+    techStack: '',
+    isFeatured: false,
   });
   const [projectLoading, setProjectLoading] = useState(false);
   const [showServiceModal, setShowServiceModal] = useState(false);
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
       const newProject = await addProject(project);
       setProjects([...projects, newProject]);
       setShowProjectModal(false);
-  setProjectForm({ title: '', description: '', image: '', tags: '', link: '', isFeatured: true });
+  setProjectForm({ title: '', description: '', image: '', tags: '', techStack: '', isFeatured: false });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -292,12 +292,13 @@ const AdminDashboard = () => {
                       <form onSubmit={e => { e.preventDefault(); handleAddProject({
                         ...projectForm,
                         tags: projectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+                        techStack: projectForm.techStack.split(',').map(t => t.trim()).filter(Boolean),
                       }); }} className="flex flex-col gap-4">
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Title" required value={projectForm.title} onChange={e => setProjectForm(f => ({ ...f, title: e.target.value }))} />
                         <textarea className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Description" required value={projectForm.description} onChange={e => setProjectForm(f => ({ ...f, description: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Image URL (optional)" value={projectForm.image} onChange={e => setProjectForm(f => ({ ...f, image: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={projectForm.tags} onChange={e => setProjectForm(f => ({ ...f, tags: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Project Link (optional)" value={projectForm.link} onChange={e => setProjectForm(f => ({ ...f, link: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tech Stack (comma separated)" value={projectForm.techStack} onChange={e => setProjectForm(f => ({ ...f, techStack: e.target.value }))} />
                         <label className="flex items-center gap-2 text-white">
                           <input type="checkbox" checked={projectForm.isFeatured} onChange={e => setProjectForm(f => ({ ...f, isFeatured: e.target.checked }))} />
                           Featured Project
@@ -318,12 +319,13 @@ const AdminDashboard = () => {
                       <form onSubmit={e => { e.preventDefault(); handleEditProject(editProjectId!, {
                         ...editProjectForm,
                         tags: editProjectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+                        techStack: editProjectForm.techStack.split(',').map(t => t.trim()).filter(Boolean),
                       }); }} className="flex flex-col gap-4">
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Title" required value={editProjectForm.title} onChange={e => setEditProjectForm(f => ({ ...f, title: e.target.value }))} />
                         <textarea className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Description" required value={editProjectForm.description} onChange={e => setEditProjectForm(f => ({ ...f, description: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Image URL (optional)" value={editProjectForm.image} onChange={e => setEditProjectForm(f => ({ ...f, image: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tags (comma separated)" value={editProjectForm.tags} onChange={e => setEditProjectForm(f => ({ ...f, tags: e.target.value }))} />
-                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Project Link (optional)" value={editProjectForm.link} onChange={e => setEditProjectForm(f => ({ ...f, link: e.target.value }))} />
+                        <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Tech Stack (comma separated)" value={editProjectForm.techStack} onChange={e => setEditProjectForm(f => ({ ...f, techStack: e.target.value }))} />
                         <label className="flex items-center gap-2 text-white">
                           <input type="checkbox" checked={editProjectForm.isFeatured} onChange={e => setEditProjectForm(f => ({ ...f, isFeatured: e.target.checked }))} />
                           Featured Project
@@ -360,8 +362,8 @@ const AdminDashboard = () => {
                                     description: project.description,
                                     image: project.image || '',
                                     tags: project.tags?.join(', ') || '',
-                                    link: project.link || '',
-                                    isFeatured: project.isFeatured ?? true,
+                                    techStack: project.techStack?.join(', ') || '',
+                                    isFeatured: project.isFeatured ?? false,
                                   });
                                   setShowEditProjectModal(true);
                                 }}

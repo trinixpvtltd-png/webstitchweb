@@ -5,8 +5,8 @@ const featuredProjectSchema = new mongoose.Schema({
   description: { type: String, required: true },
   image: { type: String }, 
   tags: [{ type: String }],
-  link: { type: String },
-  isFeatured: { type: Boolean, default: true },
+  techStack: [{ type: String }],
+  isFeatured: { type: Boolean},
   
 }, { timestamps: true });
 
