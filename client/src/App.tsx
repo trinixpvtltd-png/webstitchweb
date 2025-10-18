@@ -12,6 +12,8 @@ import Portfolio from "@/pages/portfolio";
 //import Careers from "@/pages/careers";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
+import LoginPage from '@/pages/login';
+import AdminDashboard from '@/pages/admin_dashboard';
 
 function Router() {
   return (
@@ -24,6 +26,8 @@ function Router() {
    {/* <Route path="/careers" component={Careers} /> */}
     <Route path="/blog" component={Blog} />
     <Route path="/contact" component={Contact} />
+    <Route path="/login" component={LoginPage} />
+    <Route path="/admin_dashboard" component={AdminDashboard} />
     <Route component={NotFound} />
     </Switch>
   );

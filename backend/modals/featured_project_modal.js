@@ -7,7 +7,7 @@ const featuredProjectSchema = new mongoose.Schema({
   tags: [{ type: String }],
   link: { type: String },
   isFeatured: { type: Boolean, default: true },
-  date: { type: Date }
+  
 }, { timestamps: true });
 
 module.exports = mongoose.model('FeaturedProject', featuredProjectSchema);
