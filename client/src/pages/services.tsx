@@ -10,8 +10,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { BrainCircuit, Cpu, Database, Code, BarChart3, Globe2, MonitorSmartphone, Zap, Heart, Sparkles, BadgeCheck } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import { motion } from 'framer-motion';
+import { getServices } from '../lib/Api';
 
 export default function Services() {
+  // State for services data
+  const [services, setServices] = useState<any[]>([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+  const [servicesError, setServicesError] = useState<string | null>(null);
+
   // Stats for achievements
   const stats = [
     { number: '150+', label: 'Projects Completed', icon: <Zap className="h-10 w-10 text-primary" /> },
@@ -20,80 +26,22 @@ export default function Services() {
     { number: '4.9/5', label: 'Average Rating', icon: <BarChart3 className="h-10 w-10 text-primary" /> },
   ];
 
-  const premiumServices = [
-    {
-      title: 'AI Solutions & Machine Learning',
-      badge: 'Popular',
-      icon: <BrainCircuit className="h-10 w-10 text-primary" />,
-      description: 'Leverage the power of artificial intelligence and machine learning to optimize business processes, gain insights from data, and enhance decision-making.',
-      benefits: [
-        'Predictive analytics and forecasting',
-        'Natural language processing solutions',
-        'Computer vision implementations',
-        'Machine learning model development'
-      ]
-    },
-    {
-      title: 'Intelligent Process Automation',
-      badge: 'Featured',
-      icon: <Cpu className="h-10 w-10 text-primary" />,
-      description: 'Streamline workflows and reduce manual workloads with our automation solutions that combine RPA, AI, and workflow orchestration.',
-      benefits: [
-        'Robotic Process Automation (RPA)',
-        'Business process optimization',
-        'Workflow management systems',
-        'Integration with existing systems'
-      ]
-    },
-    {
-      title: 'AI-Powered Risk Applications',
-      badge: 'Enterprise',
-      icon: <Database className="h-10 w-10 text-primary" />,
-      description: 'Identify potential risks in your business with our AI-powered risk assessment and management solutions.',
-      benefits: [
-        'Risk identification and assessment',
-        'Fraud detection and prevention',
-        'Compliance monitoring',
-        'Real-time risk analytics'
-      ]
-    },
-    {
-      title: 'Smart Mobile Applications',
-      badge: 'Trending',
-      icon: <MonitorSmartphone className="h-10 w-10 text-primary" />,
-      description: 'Create intuitive mobile experiences that delight users and drive engagement with our custom app development services.',
-      benefits: [
-        'Cross-platform mobile development',
-        'Progressive web applications',
-        'Native iOS and Android apps',
-        'Mobile UX/UI design'
-      ]
-    },
-    {
-      title: 'AR Solutions & Virtual Assistance',
-      badge: 'New',
-      icon: <Code className="h-10 w-10 text-primary" />,
-      description: 'Transform customer experiences and improve operational efficiency with AR and virtual assistance technologies.',
-      benefits: [
-        'Augmented reality applications',
-        'Virtual product demonstrations',
-        'Interactive training solutions',
-        'AR-powered remote assistance'
-      ]
-    },
-    {
-      title: 'AI-Driven Data Analytics',
-      badge: 'Advanced',
-      icon: <BarChart3 className="h-10 w-10 text-primary" />,
-      description: 'Unlock the full potential of your data with our advanced analytics solutions powered by artificial intelligence.',
-      benefits: [
-        'Data visualization and dashboards',
-        'Predictive and prescriptive analytics',
-        'Big data processing and analysis',
-        'Custom reporting solutions'
-      ]
-    }
-  ];
+  // Fetch services from backend
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setServicesLoading(true);
+        const servicesData = await getServices();
+        setServices(servicesData);
+      } catch (error: any) {
+        setServicesError(error.message || 'Failed to fetch services');
+      } finally {
+        setServicesLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   // AI Solutions delivery process steps
   const aiSolutionsSteps = [
@@ -338,13 +286,48 @@ export default function Services() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {premiumServices.map((service, index) => (
+              {servicesLoading ? (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-[#a5b4fc]">Loading services...</p>
+                </div>
+              ) : servicesError ? (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-red-500">{servicesError}</p>
+                </div>
+              ) : (
+                services.map((service, index) => (
                 <Reveal as="div" delay={index * 100} key={service.title}>
                   <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow-xl hover:shadow-2xl transition-all h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
                     <CardHeader>
                       <div className="flex items-start justify-between">
-                        <div className="p-2 bg-[#ede9fe] rounded-lg dark:bg-[#353a50]">{service.icon}</div>
-                        <Badge variant="secondary" className="bg-[#7c3aed] text-white font-bold px-3 py-1 rounded-full shadow dark:bg-[#a78bfa]">{service.badge}</Badge>
+                        <div className="p-3 bg-[#ede9fe] rounded-xl dark:bg-[#353a50]">
+                          {service.icon ? (
+                            <img src={service.icon} alt={service.title} className="w-8 h-8" />
+                          ) : (
+                            <div className="w-8 h-8 flex items-center justify-center">
+                              {index === 0 ? <BrainCircuit className="w-6 h-6 text-primary" /> :
+                               index === 1 ? <Cpu className="w-6 h-6 text-primary" /> :
+                               index === 2 ? <Database className="w-6 h-6 text-primary" /> :
+                               index === 3 ? <MonitorSmartphone className="w-6 h-6 text-primary" /> :
+                               index === 4 ? <Code className="w-6 h-6 text-primary" /> :
+                               <BarChart3 className="w-6 h-6 text-primary" />}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-2 items-end">
+                          {service.tag && service.tag.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {service.tag.slice(0, 2).map((tag: string, tagIndex: number) => (
+                                <Badge key={tagIndex} variant="outline" className="text-xs bg-[#f3f4f6] text-[#374151] border-[#d1d5db] dark:bg-[#374151] dark:text-[#f3f4f6] dark:border-[#4b5563]">
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
+                          {service.isPopular && (
+                            <Badge variant="secondary" className="bg-[#7c3aed] text-white font-bold px-3 py-1 rounded-full shadow dark:bg-[#a78bfa]">Popular</Badge>
+                          )}
+                        </div>
                       </div>
                       <CardTitle className="mt-4 text-[#1a237e] font-bold dark:text-white">{service.title}</CardTitle>
                     </CardHeader>
@@ -353,7 +336,7 @@ export default function Services() {
                       <div>
                         <h4 className="font-medium mb-2 text-[#1a237e] dark:text-white">Key Benefits:</h4>
                         <ul className="space-y-2">
-                          {service.benefits.map((benefit, i) => (
+                          {service.keyBenefits?.map((benefit: string, i: number) => (
                             <li key={i} className="flex items-center gap-2 text-[#3f51b5] dark:text-[#a5b4fc]">
                               <div className="w-1 h-1 bg-[#7c3aed] rounded-full dark:bg-[#a78bfa]"></div>
                               {benefit}
@@ -367,12 +350,13 @@ export default function Services() {
                         className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"
                         onClick={() => window.location.href = '/contact'}
                       >
-                        Get Started
+                        {service.ctaText || 'Get Started'}
                       </Button>
                     </CardFooter>
                   </Card>
                 </Reveal>
-              ))}
+              ))
+              )}
             </div>
           </div>
         </section>
@@ -398,7 +382,7 @@ export default function Services() {
                         <SelectValue placeholder="Choose a service" className="text-black" />
                       </SelectTrigger>
                       <SelectContent className="bg-white text-black">
-                        {premiumServices.map((service) => (
+                        {services.map((service) => (
                           <SelectItem key={service.title} value={service.title} className="bg-white text-black hover:bg-[#ede9fe]">{service.title}</SelectItem>
                         ))}
                       </SelectContent>
