@@ -15,6 +15,22 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Check login state from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('token'));
+    const handleStorage = () => setIsLoggedIn(!!localStorage.getItem('token'));
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    window.location.href = '/home';
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -31,6 +47,7 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
+            {/* ...existing code... */}
             <a href="/home" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-home">
               Home
             </a>
@@ -43,25 +60,28 @@ export default function Navigation() {
             <a href="/portfolio" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-portfolio">
               Portfolio
             </a>
-            
             <a href="/blog" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-blog">
               Blog
             </a>
-           {/* <a href="/careers" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-careers">
+            {/* <a href="/careers" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-careers">
               Careers
             </a> */}
-          
             <a href="/contact" className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors" data-testid="link-contact">
               Contact
             </a>
-           
           </div>
 
           <div className="hidden md:flex items-center gap-2">
             {/* <ThemeToggle /> */}
-            <Button size="sm" data-testid="button-cta">
-              Get Started
-            </Button>
+            {!isLoggedIn ? (
+              <Button size="sm" data-testid="button-cta" onClick={() => window.location.href = '/login'}>
+                Get Started
+              </Button>
+            ) : (
+              <Button size="sm" variant="outline" data-testid="button-logout" onClick={handleLogout}>
+                Logout
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,6 +101,7 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border mt-2" data-testid="mobile-menu">
             <div className="flex flex-col gap-2">
+              {/* ...existing code... */}
               <a href="/home" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-home">
                 Home
               </a>
@@ -93,7 +114,6 @@ export default function Navigation() {
               <a href="/portfolio" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-portfolio">
                 Portfolio
               </a>
-             
               <a href="/blog" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-blog">
                 Blog
               </a>
@@ -103,10 +123,15 @@ export default function Navigation() {
               <a href="/contact" className="text-sm hover-elevate px-3 py-2 rounded-md" data-testid="link-mobile-contact">
                 Contact
               </a>
-             
-              <Button size="sm" className="mt-2" data-testid="button-mobile-cta">
-                Get Started
-              </Button>
+              {!isLoggedIn ? (
+                <Button size="sm" className="mt-2" data-testid="button-mobile-cta" onClick={() => window.location.href = '/login'}>
+                  Get Started
+                </Button>
+              ) : (
+                <Button size="sm" className="mt-2" variant="outline" data-testid="button-mobile-logout" onClick={handleLogout}>
+                  Logout
+                </Button>
+              )}
             </div>
           </div>
         )}

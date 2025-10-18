@@ -21,7 +21,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/services', require('./routes/servicesRoutes'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     connectDB();
   console.log(`Server running on port ${PORT}`);
