@@ -29,3 +29,5 @@ rad.json
 #Test results file
 TestResults.xml
 >>>>>>> bb7e1b021460687a72952b5863c26dc86cccc506
+# env
+.env
