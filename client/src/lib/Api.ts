@@ -1,3 +1,36 @@
+// Article APIs
+export async function getArticles() {
+  return apiRequest('/api/articles', { method: 'GET' });
+}
+export async function addArticle(article: any) {
+  const token = localStorage.getItem('token');
+  return apiRequest('/api/articles', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    },
+    body: JSON.stringify(article)
+  });
+}
+export async function editArticle(id: string, updates: any) {
+  const token = localStorage.getItem('token');
+  return apiRequest(`/api/articles/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    },
+    body: JSON.stringify(updates)
+  });
+}
+export async function deleteArticle(id: string) {
+  const token = localStorage.getItem('token');
+  return apiRequest(`/api/articles/${id}`, {
+    method: 'DELETE',
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined
+  });
+}
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export async function apiRequest(path: string, options: RequestInit) {
