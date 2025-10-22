@@ -29,6 +29,7 @@ const AdminDashboard = () => {
     author: '',
     authorPosition: '',
     date: '',
+    isFeatured: false,
   });
   const [articleLoading, setArticleLoading] = useState(false);
   // Edit modal state for articles
@@ -42,6 +43,7 @@ const AdminDashboard = () => {
     author: '',
     authorPosition: '',
     date: '',
+    isFeatured: false,
   });
   const [editArticleLoading, setEditArticleLoading] = useState(false);
 
@@ -104,7 +106,7 @@ const AdminDashboard = () => {
       const newArticle = await addArticle(article);
       setArticles([...articles, newArticle]);
       setShowArticleModal(false);
-      setArticleForm({ tag: '', image: '', heading: '', description: '', author: '', authorPosition: '', date: '' });
+      setArticleForm({ tag: '', image: '', heading: '', description: '', author: '', authorPosition: '', date: '', isFeatured: false });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -476,6 +478,7 @@ const AdminDashboard = () => {
                           <th className="p-4 text-lg text-center">Tag</th>
                           <th className="p-4 text-lg text-center">Author</th>
                           <th className="p-4 text-lg text-center">Date</th>
+                          <th className="p-4 text-lg text-center">Featured</th>
                           <th className="p-4 text-lg text-center">Actions</th>
                         </tr>
                       </thead>
@@ -486,6 +489,7 @@ const AdminDashboard = () => {
                             <td className="p-4 text-white/80 text-center">{article.tag}</td>
                             <td className="p-4 text-white/80 text-center">{article.author}</td>
                             <td className="p-4 text-white/80 text-center">{article.date}</td>
+                            <td className="p-4 text-white/80 text-center">{article.isFeatured ? 'Yes' : 'No'}</td>
                             <td className="p-4 flex gap-2 rounded-r-xl justify-center">
                               <button
                                 className="px-4 py-2 bg-blue-500/80 text-white rounded-lg hover:bg-blue-600 transition font-semibold"
@@ -499,6 +503,7 @@ const AdminDashboard = () => {
                                     author: article.author || '',
                                     authorPosition: article.authorPosition || '',
                                     date: article.date || '',
+                                    isFeatured: article.isFeatured || false,
                                   });
                                   setShowEditArticleModal(true);
                                 }}
@@ -525,6 +530,10 @@ const AdminDashboard = () => {
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Author" required value={articleForm.author} onChange={e => setArticleForm(f => ({ ...f, author: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Author Position" required value={articleForm.authorPosition} onChange={e => setArticleForm(f => ({ ...f, authorPosition: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Date (YYYY-MM-DD)" value={articleForm.date} onChange={e => setArticleForm(f => ({ ...f, date: e.target.value }))} />
+                        <label className="flex items-center gap-2 text-white">
+                          <input type="checkbox" checked={articleForm.isFeatured} onChange={e => setArticleForm(f => ({ ...f, isFeatured: e.target.checked }))} />
+                          Featured Article
+                        </label>
                         <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={articleLoading}>
                           {articleLoading ? 'Creating...' : 'Create Article'}
                         </button>
@@ -547,6 +556,10 @@ const AdminDashboard = () => {
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Author" required value={editArticleForm.author} onChange={e => setEditArticleForm(f => ({ ...f, author: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Author Position" required value={editArticleForm.authorPosition} onChange={e => setEditArticleForm(f => ({ ...f, authorPosition: e.target.value }))} />
                         <input className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400" placeholder="Date (YYYY-MM-DD)" value={editArticleForm.date} onChange={e => setEditArticleForm(f => ({ ...f, date: e.target.value }))} />
+                        <label className="flex items-center gap-2 text-white">
+                          <input type="checkbox" checked={editArticleForm.isFeatured} onChange={e => setEditArticleForm(f => ({ ...f, isFeatured: e.target.checked }))} />
+                          Featured Article
+                        </label>
                         <button type="submit" className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2" disabled={editArticleLoading}>
                           {editArticleLoading ? 'Saving...' : 'Save Changes'}
                         </button>
