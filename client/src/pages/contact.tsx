@@ -4,8 +4,36 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Phone, Mail, MapPin, MessageCircle, Star, Users, CheckCircle, Clock, Info } from 'lucide-react';
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSending(true);
+    setError(null);
+    setSent(false);
+    try {
+      await emailjs.sendForm(
+        'service_f4erbvf',
+        'template_bt5wjav',
+        formRef.current!,
+        'UTtwWjkOSFubxuIs4'
+      );
+      setSent(true);
+      if (formRef.current) formRef.current.reset();
+    } catch (err: any) {
+      setError('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
   <div className="min-h-screen relative text-[#e3e8f0] overflow-x-hidden">
       <StarVideoBackground />
@@ -54,49 +82,31 @@ export default function Contact() {
           <div className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-xl border border-[#e3e8f0] dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
             <h2 className="text-xl font-bold mb-4 text-white dark:text-white">Start Your Project</h2>
             <p className="text-blue-900 mb-6 dark:text-[#a5b4fc]">Tell us about your vision and we'll make it reality</p>
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form ref={formRef} onSubmit={handleSend} className="grid grid-cols-1 gap-4">
               <div>
-                <label className="block text-sm mb-1">Name *</label>
-                <input className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="Your full name" required />
+                <label className="block text-sm mb-1">Full Name *</label>
+                <input name="user_name" className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="Your full name" required />
               </div>
               <div>
-                <label className="block text-sm mb-1">Email *</label>
-                <input className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="your@email.com" required />
+                <label className="block text-sm mb-1">Email Address *</label>
+                <input name="user_email" type="email" className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="your@email.com" required />
               </div>
               <div>
                 <label className="block text-sm mb-1">Company</label>
-                <input className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="Your company name" />
+                <input name="company" className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" placeholder="Your company name" />
               </div>
               <div>
-                <label className="block text-sm mb-1">Project Type</label>
-                <select className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white">
-                  <option>Select project type</option>
-                  <option>AI Solutions</option>
-                  <option>Web Development</option>
-                  <option>Mobile Apps</option>
-                  <option>UI/UX Design</option>
-                  <option>E-commerce</option>
-                  <option>Other</option>
-                </select>
+                <label className="block text-sm mb-1">Your Message *</label>
+                <textarea name="message" className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" rows={4} placeholder="Tell us about your project, goals, timeline, and any specific requirements..." required />
               </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm mb-1">Budget Range</label>
-                <select className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white">
-                  <option>Select budget range</option>
-                  <option>Below $5,000</option>
-                  <option>$5,000 - $10,000</option>
-                  <option>$10,000 - $25,000</option>
-                  <option>$25,000+</option>
-                </select>
-              </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm mb-1">Project Details *</label>
-                <textarea className="w-full rounded-lg bg-[#ede9fe] text-[#1a237e] px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] dark:bg-[#353a50] dark:text-white" rows={4} placeholder="Tell us about your project, goals, timeline, and any specific requirements..." required />
-              </div>
-              <div className="md:col-span-2 mt-2">
-                <Button type="submit" className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold py-3 text-lg shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"> 
-                  <span className="flex items-center gap-2 justify-center"><span>Send Message & Get Free Quote</span></span>
+              <div className="mt-2">
+                <Button type="submit" disabled={sending} className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-bold py-3 text-lg shadow-lg hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1]"> 
+                  <span className="flex items-center gap-2 justify-center">
+                    {sending ? 'Sending...' : sent ? 'Message Sent!' : 'Send Message & Get Free Quote'}
+                  </span>
                 </Button>
+                {error && <div className="text-red-400 text-center mt-2">{error}</div>}
+                {sent && !error && <div className="text-green-400 text-center mt-2">Thank you! Your message has been sent.</div>}
               </div>
             </form>
           </div>
