@@ -1,7 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
+import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
 
-// A full-screen Three.js animated background with glowing, moving nodes and connecting lines
 export default function FuturisticThreeBackground() {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +30,11 @@ export default function FuturisticThreeBackground() {
         (Math.random() - 0.5) * 50,
         (Math.random() - 0.5) * 60
       );
-      (mesh.material as THREE.MeshBasicMaterial).color.setHSL(0.7 + Math.random() * 0.1, 0.7, 0.7);
+      (mesh.material as THREE.MeshBasicMaterial).color.setHSL(
+        0.7 + Math.random() * 0.1,
+        0.7,
+        0.7
+      );
       scene.add(mesh);
       nodes.push(mesh);
       nodeData.push({
@@ -39,12 +42,16 @@ export default function FuturisticThreeBackground() {
           (Math.random() - 0.5) * 0.2,
           (Math.random() - 0.5) * 0.2,
           (Math.random() - 0.5) * 0.2
-        )
+        ),
       });
     }
 
     // Line geometry
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xa5b4fc, transparent: true, opacity: 0.18 });
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0xa5b4fc,
+      transparent: true,
+      opacity: 0.18,
+    });
     let lines: THREE.Line[] = [];
 
     function animate() {
@@ -53,7 +60,7 @@ export default function FuturisticThreeBackground() {
         const mesh = nodes[i];
         mesh.position.add(nodeData[i].velocity);
         // Bounce
-        const axes: Array<'x' | 'y' | 'z'> = ['x', 'y', 'z'];
+        const axes: Array<"x" | "y" | "z"> = ["x", "y", "z"];
         const limits = [40, 25, 30];
         axes.forEach((axis, idx) => {
           const limit = limits[idx];
@@ -92,10 +99,10 @@ export default function FuturisticThreeBackground() {
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       mountRef.current?.removeChild(renderer.domElement);
       renderer.dispose();
     };
@@ -106,7 +113,7 @@ export default function FuturisticThreeBackground() {
       ref={mountRef}
       className="fixed inset-0 w-full h-full -z-10 pointer-events-none select-none"
       aria-hidden="true"
-      style={{ background: 'transparent' }}
+      style={{ background: "transparent" }}
     />
   );
 }
