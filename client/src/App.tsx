@@ -12,23 +12,27 @@ import Portfolio from "@/pages/portfolio";
 //import Careers from "@/pages/careers";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
-import LoginPage from '@/pages/login';
-import AdminDashboard from '@/pages/admin_dashboard';
+import LoginPage from "@/pages/login";
+import AdminDashboard from "@/pages/admin_dashboard";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import Terms from "@/pages/terms";
 
 function Router() {
   return (
     <Switch>
-    <Route path="/" component={Home} />
-    <Route path="/home" component={Home} />
-    <Route path="/about" component={About} />
-    <Route path="/services" component={Services} />
-    <Route path="/portfolio" component={Portfolio} />
-   {/* <Route path="/careers" component={Careers} /> */}
-    <Route path="/blog" component={Blog} />
-    <Route path="/contact" component={Contact} />
-    <Route path="/login" component={LoginPage} />
-    <Route path="/admin_dashboard" component={AdminDashboard} />
-    <Route component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/home" component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/services" component={Services} />
+      <Route path="/portfolio" component={Portfolio} />
+      {/* <Route path="/careers" component={Careers} /> */}
+      <Route path="/blog" component={Blog} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/admin_dashboard" component={AdminDashboard} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms" component={Terms} />
+      <Route component={NotFound} />
     </Switch>
   );
 }
