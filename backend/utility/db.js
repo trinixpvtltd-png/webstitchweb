@@ -9,6 +9,14 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log('MongoDB connected');
+
+    // Remove legacy index that causes duplicate key errors
+    try {
+      await mongoose.connection.collection('users').dropIndex('username_1');
+      console.log('Dropped legacy index: username_1');
+    } catch (error) {
+      // Index might not exist or already dropped, which is fine
+    }
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);

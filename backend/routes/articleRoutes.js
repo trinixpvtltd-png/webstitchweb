@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const articleController = require('../controllers/article_controller');
-const authMiddleware = require('../middlewares/auth_middleware');
-
-// Middleware to check admin role
-const isAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
-    next();
-  } else {
-    res.status(403).json({ message: 'Access denied. Admins only.' });
-  }
-};
+const { authMiddleware, requireRole } = require('../middlewares/auth_middleware');
 
 // Get all articles (open to all)
 router.get('/', articleController.getAllArticles);
@@ -19,12 +10,12 @@ router.get('/', articleController.getAllArticles);
 router.get('/:id', articleController.getArticleById);
 
 // Create a new article (admin only)
-router.post('/', authMiddleware, isAdmin, articleController.createArticle);
+router.post('/', authMiddleware, requireRole('admin'), articleController.createArticle);
 
 // Update an article (admin only)
-router.put('/:id', authMiddleware, isAdmin, articleController.updateArticle);
+router.put('/:id', authMiddleware, requireRole('admin'), articleController.updateArticle);
 
 // Delete an article (admin only)
-router.delete('/:id', authMiddleware, isAdmin, articleController.deleteArticle);
+router.delete('/:id', authMiddleware, requireRole('admin'), articleController.deleteArticle);
 
 module.exports = router;

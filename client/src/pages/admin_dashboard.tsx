@@ -14,10 +14,57 @@ import {
   addArticle,
   editArticle,
   deleteArticle,
+  getTemplates,
+  addTemplate,
+  editTemplate,
+  deleteTemplate,
+  getPresignedUrl,
+  uploadFileToS3,
 } from "../lib/Api";
 import Admin3D from "@/components/Admin3D";
 
 const AdminDashboard = () => {
+  const [error, setError] = useState<string | null>(null);
+
+  // Service State
+  const [services, setServices] = useState<any[]>([]);
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const [serviceForm, setServiceForm] = useState({
+    title: "",
+    description: "",
+    keyBenefits: "",
+    icon: "",
+    ctaText: "",
+    tag: "",
+    isPopular: false,
+  });
+  const [serviceLoading, setServiceLoading] = useState(false);
+  const [showEditServiceModal, setShowEditServiceModal] = useState(false);
+  const [editServiceId, setEditServiceId] = useState<string | null>(null);
+  const [editServiceForm, setEditServiceForm] = useState({
+    title: "",
+    description: "",
+    keyBenefits: "",
+    icon: "",
+    ctaText: "",
+    tag: "",
+    isPopular: false,
+  });
+  const [editServiceLoading, setEditServiceLoading] = useState(false);
+
+  // Project State
+  const [projects, setProjects] = useState<any[]>([]);
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [projectForm, setProjectForm] = useState({
+    title: "",
+    description: "",
+    image: "",
+    tags: "",
+    techStack: "",
+    isFeatured: false,
+  });
+  const [projectLoading, setProjectLoading] = useState(false);
+
   // Edit modal state for projects
   const [showEditProjectModal, setShowEditProjectModal] = useState(false);
   const [editProjectId, setEditProjectId] = useState<string | null>(null);
@@ -31,8 +78,14 @@ const AdminDashboard = () => {
   });
   const [editProjectLoading, setEditProjectLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<
-    "services" | "projects" | "articles"
-  >("services");
+    "services" | "projects" | "articles" | "templates"
+  >(() => {
+    return (localStorage.getItem("adminActiveTab") as any) || "services";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("adminActiveTab", activeTab);
+  }, [activeTab]);
   // Article state
   const [articles, setArticles] = useState<any[]>([]);
   const [showArticleModal, setShowArticleModal] = useState(false);
@@ -62,64 +115,173 @@ const AdminDashboard = () => {
   });
   const [editArticleLoading, setEditArticleLoading] = useState(false);
 
-  // Services & Projects state (restored)
-  const [services, setServices] = useState<any[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [error, setError] = useState("");
+  // Template State
+  interface ImageFile {
+    file?: File;
+    url: string;
+    key?: string;
+    isMain: boolean;
+  }
+  const [templateImages, setTemplateImages] = useState<ImageFile[]>([]);
 
-  const [showProjectModal, setShowProjectModal] = useState(false);
-  const [projectForm, setProjectForm] = useState({
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [showTemplateModal, setShowTemplateModal] = useState(false);
+  const [templateForm, setTemplateForm] = useState({
     title: "",
+    slug: "",
     description: "",
-    image: "",
-    tags: "", // comma separated
-    techStack: "",
-    isFeatured: false,
+    price: 0,
+    visitLink: "",
+    category: "app",
+    features: "", // comma separated
+    published: true,
   });
-  const [projectLoading, setProjectLoading] = useState(false);
-  const [showServiceModal, setShowServiceModal] = useState(false);
-  const [serviceForm, setServiceForm] = useState({
-    title: "",
-    description: "",
-    keyBenefits: "", // comma separated
-    isPopular: false,
-    icon: "",
-    tag: "",
-    ctaText: "Get Started",
-  });
-  // Edit modal state for services
-  const [showEditServiceModal, setShowEditServiceModal] = useState(false);
-  const [editServiceId, setEditServiceId] = useState<string | null>(null);
-  const [editServiceForm, setEditServiceForm] = useState({
-    title: "",
-    description: "",
-    keyBenefits: "",
-    isPopular: false,
-    icon: "",
-    tag: "",
-    ctaText: "Get Started",
-  });
-  const [editServiceLoading, setEditServiceLoading] = useState(false);
-  const [serviceLoading, setServiceLoading] = useState(false);
+  const [templateLoading, setTemplateLoading] = useState(false);
+  const [templateFilter, setTemplateFilter] = useState("all");
 
-  useEffect(() => {
-    getServices()
-      .then(setServices)
-      .catch((err) => setError(err.message));
-    getProjects()
-      .then(setProjects)
-      .catch((err) => setError(err.message));
-    getArticles()
-      .then(setArticles)
-      .catch((err) => setError(err.message));
-  }, []);
+  // Edit Template State
+  const [showEditTemplateModal, setShowEditTemplateModal] = useState(false);
+  const [editTemplateId, setEditTemplateId] = useState<string | null>(null);
+  const [editTemplateForm, setEditTemplateForm] = useState({
+    title: "",
+    slug: "",
+    description: "",
+    price: 0,
+    visitLink: "",
+    category: "app",
+    features: "",
+    published: true,
+  });
+  const [editTemplateLoading, setEditTemplateLoading] = useState(false);
 
-  // Article CRUD
-  const handleAddArticle = async (article: any) => {
+  const fetchServices = async () => {
+    try {
+      const data = await getServices();
+      setServices(data);
+    } catch (err) {
+      console.error("Failed to fetch services", err);
+    }
+  };
+
+  const handleAddService = async (data: any) => {
+    setServiceLoading(true);
+    try {
+      await addService(data);
+      setShowServiceModal(false);
+      setServiceForm({
+        title: "",
+        description: "",
+        keyBenefits: "",
+        icon: "",
+        ctaText: "",
+        tag: "",
+        isPopular: false,
+      });
+      fetchServices();
+    } catch (err) {
+      console.error("Failed to add service", err);
+      setError("Failed to add service");
+    } finally {
+      setServiceLoading(false);
+    }
+  };
+
+  const handleEditService = async (id: string, data: any) => {
+    setEditServiceLoading(true);
+    try {
+      await editService(id, data);
+      setShowEditServiceModal(false);
+      setEditServiceId(null);
+      fetchServices();
+    } catch (err) {
+      console.error("Failed to edit service", err);
+      setError("Failed to edit service");
+    } finally {
+      setEditServiceLoading(false);
+    }
+  };
+
+  const handleDeleteService = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this service?")) return;
+    try {
+      await deleteService(id);
+      fetchServices();
+    } catch (err) {
+      console.error("Failed to delete service", err);
+      setError("Failed to delete service");
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const data = await getProjects();
+      setProjects(data);
+    } catch (err) {
+      console.error("Failed to fetch projects", err);
+    }
+  };
+
+  const handleAddProject = async (data: any) => {
+    setProjectLoading(true);
+    try {
+      await addProject(data);
+      setShowProjectModal(false);
+      setProjectForm({
+        title: "",
+        description: "",
+        image: "",
+        tags: "",
+        techStack: "",
+        isFeatured: false,
+      });
+      fetchProjects();
+    } catch (err) {
+      console.error("Failed to add project", err);
+      setError("Failed to add project");
+    } finally {
+      setProjectLoading(false);
+    }
+  };
+
+  const handleEditProject = async (id: string, data: any) => {
+    setEditProjectLoading(true);
+    try {
+      await editProject(id, data);
+      setShowEditProjectModal(false);
+      setEditProjectId(null);
+      fetchProjects();
+    } catch (err) {
+      console.error("Failed to edit project", err);
+      setError("Failed to edit project");
+    } finally {
+      setEditProjectLoading(false);
+    }
+  };
+
+  const handleDeleteProject = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this project?")) return;
+    try {
+      await deleteProject(id);
+      fetchProjects();
+    } catch (err) {
+      console.error("Failed to delete project", err);
+      setError("Failed to delete project");
+    }
+  };
+
+  const fetchArticles = async () => {
+    try {
+      const data = await getArticles();
+      setArticles(data);
+    } catch (err) {
+      console.error("Failed to fetch articles", err);
+    }
+  };
+
+  const handleAddArticle = async (data: any) => {
     setArticleLoading(true);
     try {
-      const newArticle = await addArticle(article);
-      setArticles([...articles, newArticle]);
+      await addArticle(data);
       setShowArticleModal(false);
       setArticleForm({
         tag: "",
@@ -131,126 +293,221 @@ const AdminDashboard = () => {
         date: "",
         isFeatured: false,
       });
-    } catch (err: any) {
-      setError(err.message);
+      fetchArticles();
+    } catch (err) {
+      console.error("Failed to add article", err);
+      setError("Failed to add article");
     } finally {
       setArticleLoading(false);
     }
   };
 
-  const handleEditArticle = async (id: string, updates: any) => {
+  const handleEditArticle = async (id: string, data: any) => {
     setEditArticleLoading(true);
     try {
-      const updated = await editArticle(id, updates);
-      setArticles(articles.map((a) => (a._id === id ? updated : a)));
+      await editArticle(id, data);
       setShowEditArticleModal(false);
       setEditArticleId(null);
-    } catch (err: any) {
-      setError(err.message);
+      fetchArticles();
+    } catch (err) {
+      console.error("Failed to edit article", err);
+      setError("Failed to edit article");
     } finally {
       setEditArticleLoading(false);
     }
   };
 
   const handleDeleteArticle = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this article?")) return;
     try {
       await deleteArticle(id);
-      setArticles(articles.filter((a) => a._id !== id));
-    } catch (err: any) {
-      setError(err.message);
+      fetchArticles();
+    } catch (err) {
+      console.error("Failed to delete article", err);
+      setError("Failed to delete article");
     }
   };
 
-  // Service CRUD (create)
-  const handleAddService = async (service: any) => {
-    setServiceLoading(true);
+  // Helper for file upload
+  const handleFileUpload = async (file: File) => {
+    const { url, key, publicUrl } = await getPresignedUrl(file.name, file.type);
+    await uploadFileToS3(url, file);
+    return { key, url: publicUrl };
+  };
+
+  const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    addImages(files);
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      addImages(files);
+    }
+  };
+
+  const addImages = (files: File[]) => {
+    const newImages = files.map((file, index) => ({
+      file,
+      url: URL.createObjectURL(file),
+      isMain: templateImages.length === 0 && index === 0, // First image is main by default if list empty
+    }));
+    setTemplateImages([...templateImages, ...newImages]);
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = [...templateImages];
+    const wasMain = newImages[index].isMain;
+    newImages.splice(index, 1);
+    if (wasMain && newImages.length > 0) {
+      newImages[0].isMain = true; // Reassign main to first if main removed
+    }
+    setTemplateImages(newImages);
+  };
+
+  const setMainImage = (index: number) => {
+    const newImages = templateImages.map((img, i) => ({
+      ...img,
+      isMain: i === index,
+    }));
+    setTemplateImages(newImages);
+  };
+
+  const fetchTemplates = async () => {
     try {
-      const newService = await addService(service);
-      setServices([...services, newService]);
-      setShowServiceModal(false);
-      setServiceForm({
-        title: "",
-        description: "",
-        keyBenefits: "",
-        isPopular: false,
-        icon: "",
-        tag: "",
-        ctaText: "Get Started",
+      const data = await getTemplates();
+      setTemplates(data);
+    } catch (err: any) {
+      console.error("Failed to fetch templates", err);
+      setError(err.message || "Failed to fetch templates");
+    }
+  };
+
+  const handleAddTemplate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setTemplateLoading(true);
+    try {
+      let mainImageResult = { key: "", url: "" };
+      const galleryResults = [];
+
+      for (const img of templateImages) {
+        let result = { key: img.key || "", url: img.url };
+        if (img.file) {
+          result = await handleFileUpload(img.file);
+        }
+
+        if (img.isMain) {
+          mainImageResult = result;
+        } else {
+          galleryResults.push(result);
+        }
+      }
+
+      // If no main image selected but images exist, take the first one?
+      // Logic above ensures one isMain if list not empty.
+
+      const featuresArray = templateForm.features
+        .split(",")
+        .map((f) => f.trim())
+        .filter(Boolean);
+
+      await addTemplate({
+        ...templateForm,
+        features: featuresArray,
+        mainImage: mainImageResult.url ? mainImageResult : undefined,
+        gallery: galleryResults,
       });
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setServiceLoading(false);
-    }
-  };
 
-  const handleEditService = async (id: string, updates: any) => {
-    setEditServiceLoading(true);
-    try {
-      const updated = await editService(id, updates);
-      setServices(services.map((s) => (s._id === id ? updated : s)));
-      setShowEditServiceModal(false);
-      setEditServiceId(null);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setEditServiceLoading(false);
-    }
-  };
-
-  const handleDeleteService = async (id: string) => {
-    try {
-      await deleteService(id);
-      setServices(services.filter((s) => s._id !== id));
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
-  // Project CRUD
-  const handleAddProject = async (project: any) => {
-    setProjectLoading(true);
-    try {
-      const newProject = await addProject(project);
-      setProjects([...projects, newProject]);
-      setShowProjectModal(false);
-      setProjectForm({
+      setShowTemplateModal(false);
+      setTemplateForm({
         title: "",
+        slug: "",
         description: "",
-        image: "",
-        tags: "",
-        techStack: "",
-        isFeatured: false,
+        price: 0,
+        visitLink: "",
+        category: "app",
+        features: "",
+        published: true,
       });
+      setTemplateImages([]);
+      fetchTemplates();
     } catch (err: any) {
-      setError(err.message);
+      console.error("Failed to add template", err);
+      setError(err.message || "Failed to add template");
     } finally {
-      setProjectLoading(false);
+      setTemplateLoading(false);
     }
   };
 
-  const handleEditProject = async (id: string, updates: any) => {
-    setEditProjectLoading(true);
+  const handleEditTemplate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editTemplateId) return;
+    setEditTemplateLoading(true);
     try {
-      const updated = await editProject(id, updates);
-      setProjects(projects.map((p) => (p._id === id ? updated : p)));
-      setShowEditProjectModal(false);
-      setEditProjectId(null);
-    } catch (err: any) {
-      setError(err.message);
+      let mainImageResult = { key: "", url: "" };
+      const galleryResults = [];
+
+      for (const img of templateImages) {
+        let result = { key: img.key || "", url: img.url };
+        if (img.file) {
+          result = await handleFileUpload(img.file);
+        }
+
+        if (img.isMain) {
+          mainImageResult = result;
+        } else {
+          galleryResults.push(result);
+        }
+      }
+
+      const featuresArray = editTemplateForm.features
+        .split(",")
+        .map((f) => f.trim())
+        .filter(Boolean);
+
+      await editTemplate(editTemplateId, {
+        ...editTemplateForm,
+        features: featuresArray,
+        mainImage: mainImageResult.url ? mainImageResult : undefined,
+        gallery: galleryResults,
+      });
+
+      setShowEditTemplateModal(false);
+      setEditTemplateId(null);
+      setTemplateImages([]);
+      fetchTemplates();
+    } catch (err) {
+      console.error("Failed to edit template", err);
+      setError("Failed to edit template");
     } finally {
-      setEditProjectLoading(false);
+      setEditTemplateLoading(false);
     }
   };
 
-  const handleDeleteProject = async (id: string) => {
+  const handleDeleteTemplate = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this template?")) return;
     try {
-      await deleteProject(id);
-      setProjects(projects.filter((p) => p._id !== id));
-    } catch (err: any) {
-      setError(err.message);
+      await deleteTemplate(id);
+      fetchTemplates();
+    } catch (err) {
+      console.error("Failed to delete template", err);
+      setError("Failed to delete template");
     }
   };
+
+  useEffect(() => {
+    if (activeTab === "services") {
+      fetchServices();
+    } else if (activeTab === "projects") {
+      fetchProjects();
+    } else if (activeTab === "articles") {
+      fetchArticles();
+    } else if (activeTab === "templates") {
+      fetchTemplates();
+    }
+  }, [activeTab]);
 
   return (
     <div className="relative min-h-screen text-[#e3e8f0] font-sans">
@@ -274,7 +531,7 @@ const AdminDashboard = () => {
               >
                 Services
               </button>
-              <button
+              {/* <button
                 className={`text-left px-5 py-3 rounded-xl transition font-semibold text-lg ${
                   activeTab === "projects"
                     ? "bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white shadow-xl"
@@ -283,7 +540,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab("projects")}
               >
                 Projects
-              </button>
+              </button> */}
               <button
                 className={`text-left px-5 py-3 rounded-xl transition font-semibold text-lg ${
                   activeTab === "articles"
@@ -294,6 +551,18 @@ const AdminDashboard = () => {
               >
                 Articles
               </button>
+              {/* 
+              <button
+                className={`text-left px-5 py-3 rounded-xl transition font-semibold text-lg ${
+                  activeTab === "templates"
+                    ? "bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white shadow-xl"
+                    : "text-[#a5b4fc] hover:bg-white/10"
+                }`}
+                onClick={() => setActiveTab("templates")}
+              >
+                Templates
+              </button>
+              */}
             </nav>
           </aside>
           <main className="flex-1 p-8">
@@ -621,7 +890,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
             )}
-            {activeTab === "projects" && (
+            {/* {activeTab === "projects" && (
               <div>
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-3xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-lg">
@@ -634,7 +903,7 @@ const AdminDashboard = () => {
                     + Create Project
                   </button>
                 </div>
-                {/* Modal for creating project */}
+                {/* Modal for creating project * /}
                 {showProjectModal && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
                     <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10">
@@ -745,7 +1014,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 )}
-                {/* Edit Project Modal */}
+                {/* Edit Project Modal * /}
                 {showEditProjectModal && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
                     <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10">
@@ -911,7 +1180,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
             {activeTab === "articles" && (
               <div>
                 <div className="flex items-center justify-between mb-8">
@@ -1248,6 +1517,492 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+            {activeTab === "templates" && (
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-3xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-lg">
+                    Templates
+                  </h2>
+                  <button
+                    className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-6 py-3 rounded-xl font-bold shadow-xl hover:from-[#7c3aed]/80 hover:to-[#6366f1]/80 transition text-lg"
+                    onClick={() => setShowTemplateModal(true)}
+                  >
+                    + Create Template
+                  </button>
+                </div>
+                {/* Modal for creating template */}
+                {showTemplateModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                    <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10 max-h-[85vh] overflow-y-auto">
+                      <button
+                        className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl"
+                        onClick={() => setShowTemplateModal(false)}
+                      >
+                        &times;
+                      </button>
+                      <h3 className="text-xl font-bold mb-4 text-center text-[#7c3aed]">
+                        Create Template
+                      </h3>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleAddTemplate(e);
+                        }}
+                        className="flex flex-col gap-4"
+                      >
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Title"
+                          required
+                          value={templateForm.title}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              title: e.target.value,
+                            }))
+                          }
+                        />
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Slug"
+                          required
+                          value={templateForm.slug}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              slug: e.target.value,
+                            }))
+                          }
+                        />
+                        <textarea
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Description"
+                          required
+                          value={templateForm.description}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              description: e.target.value,
+                            }))
+                          }
+                        />
+                        <input
+                          type="number"
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Price"
+                          required
+                          value={templateForm.price}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              price: Number(e.target.value),
+                            }))
+                          }
+                        />
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Visit Link (e.g., https://example.com)"
+                          value={templateForm.visitLink}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              visitLink: e.target.value,
+                            }))
+                          }
+                        />
+                        <select
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white"
+                          value={templateForm.category}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              category: e.target.value,
+                            }))
+                          }
+                        >
+                          <option value="3d">3D</option>
+                          <option value="2d">2D</option>
+                          <option value="app">App</option>
+                          <option value="chatbot">Chatbot</option>
+                          <option value="other">Other</option>
+                        </select>
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Features (comma separated)"
+                          value={templateForm.features}
+                          onChange={(e) =>
+                            setTemplateForm((f) => ({
+                              ...f,
+                              features: e.target.value,
+                            }))
+                          }
+                        />
+                        <div>
+                          <label className="block text-white mb-2">
+                            Images (Drag & Drop or Click)
+                          </label>
+                          <div
+                            className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center cursor-pointer hover:border-[#7c3aed] transition"
+                            onDrop={handleImageDrop}
+                            onDragOver={(e) => e.preventDefault()}
+                            onClick={() => document.getElementById("template-images-input")?.click()}
+                          >
+                            <p className="text-gray-400">Drag images here or click to upload</p>
+                            <input
+                              id="template-images-input"
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleImageSelect}
+                            />
+                          </div>
+                          
+                          {/* Image Preview Grid */}
+                          {templateImages.length > 0 && (
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {templateImages.map((img, index) => (
+                                <div key={index} className="relative group border border-white/10 rounded-lg overflow-hidden">
+                                  <img
+                                    src={img.url}
+                                    alt={`Preview ${index}`}
+                                    className="w-full h-24 object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => setMainImage(index)}
+                                      className={`px-2 py-1 text-xs rounded ${img.isMain ? 'bg-green-500 text-white' : 'bg-white/20 text-white hover:bg-white/40'}`}
+                                    >
+                                      {img.isMain ? 'Main Image' : 'Set as Main'}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => removeImage(index)}
+                                      className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                  {img.isMain && (
+                                    <div className="absolute top-1 left-1 bg-green-500 text-white text-[10px] px-1 rounded">
+                                      MAIN
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <label className="flex items-center gap-2 text-white">
+                          <input
+                            type="checkbox"
+                            checked={templateForm.published}
+                            onChange={(e) =>
+                              setTemplateForm((f) => ({
+                                ...f,
+                                published: e.target.checked,
+                              }))
+                            }
+                          />
+                          Published
+                        </label>
+                        <button
+                          type="submit"
+                          className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2"
+                          disabled={templateLoading}
+                        >
+                          {templateLoading ? "Creating..." : "Create Template"}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+                {/* Edit Template Modal */}
+                {showEditTemplateModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                    <div className="bg-black rounded-2xl shadow-2xl p-8 w-full max-w-lg relative border border-white/10 max-h-[85vh] overflow-y-auto">
+                      <button
+                        className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl"
+                        onClick={() => setShowEditTemplateModal(false)}
+                      >
+                        &times;
+                      </button>
+                      <h3 className="text-xl font-bold mb-4 text-center text-[#7c3aed]">
+                        Edit Template
+                      </h3>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleEditTemplate(e);
+                        }}
+                        className="flex flex-col gap-4"
+                      >
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Title"
+                          required
+                          value={editTemplateForm.title}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              title: e.target.value,
+                            }))
+                          }
+                        />
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Slug"
+                          required
+                          value={editTemplateForm.slug}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              slug: e.target.value,
+                            }))
+                          }
+                        />
+                        <textarea
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Description"
+                          required
+                          value={editTemplateForm.description}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              description: e.target.value,
+                            }))
+                          }
+                        />
+                        <input
+                          type="number"
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Price"
+                          required
+                          value={editTemplateForm.price}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              price: Number(e.target.value),
+                            }))
+                          }
+                        />
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Visit Link (e.g., https://example.com)"
+                          value={editTemplateForm.visitLink}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              visitLink: e.target.value,
+                            }))
+                          }
+                        />
+                        <select
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white"
+                          value={editTemplateForm.category}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              category: e.target.value,
+                            }))
+                          }
+                        >
+                          <option value="3d">3D</option>
+                          <option value="2d">2D</option>
+                          <option value="app">App</option>
+                          <option value="chatbot">Chatbot</option>
+                          <option value="other">Other</option>
+                        </select>
+                        <input
+                          className="border border-white/20 rounded-lg px-4 py-2 bg-black text-white placeholder-gray-400"
+                          placeholder="Features (comma separated)"
+                          value={editTemplateForm.features}
+                          onChange={(e) =>
+                            setEditTemplateForm((f) => ({
+                              ...f,
+                              features: e.target.value,
+                            }))
+                          }
+                        />
+                        <div>
+                          <label className="block text-white mb-2">
+                            Images (Drag & Drop or Click)
+                          </label>
+                          <div
+                            className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center cursor-pointer hover:border-[#7c3aed] transition"
+                            onDrop={handleImageDrop}
+                            onDragOver={(e) => e.preventDefault()}
+                            onClick={() => document.getElementById("edit-template-images-input")?.click()}
+                          >
+                            <p className="text-gray-400">Drag images here or click to upload</p>
+                            <input
+                              id="edit-template-images-input"
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleImageSelect}
+                            />
+                          </div>
+                          
+                          {/* Image Preview Grid */}
+                          {templateImages.length > 0 && (
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {templateImages.map((img, index) => (
+                                <div key={index} className="relative group border border-white/10 rounded-lg overflow-hidden">
+                                  <img
+                                    src={img.url}
+                                    alt={`Preview ${index}`}
+                                    className="w-full h-24 object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => setMainImage(index)}
+                                      className={`px-2 py-1 text-xs rounded ${img.isMain ? 'bg-green-500 text-white' : 'bg-white/20 text-white hover:bg-white/40'}`}
+                                    >
+                                      {img.isMain ? 'Main Image' : 'Set as Main'}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => removeImage(index)}
+                                      className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                  {img.isMain && (
+                                    <div className="absolute top-1 left-1 bg-green-500 text-white text-[10px] px-1 rounded">
+                                      MAIN
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <label className="flex items-center gap-2 text-white">
+                          <input
+                            type="checkbox"
+                            checked={editTemplateForm.published}
+                            onChange={(e) =>
+                              setEditTemplateForm((f) => ({
+                                ...f,
+                                published: e.target.checked,
+                              }))
+                            }
+                          />
+                          Published
+                        </label>
+                        <button
+                          type="submit"
+                          className="bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white px-5 py-2 rounded-lg font-bold shadow-lg mt-2"
+                          disabled={editTemplateLoading}
+                        >
+                          {editTemplateLoading ? "Saving..." : "Save Changes"}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+                {/* Filter Buttons */}
+                <div className="flex gap-4 mb-6 overflow-x-auto pb-2">
+                  {["all", "3d", "2d", "app", "chatbot"].map((filter) => (
+                    <button
+                      key={filter}
+                      onClick={() => setTemplateFilter(filter)}
+                      className={`px-4 py-2 rounded-lg font-semibold transition capitalize ${
+                        templateFilter === filter
+                          ? "bg-[#7c3aed] text-white"
+                          : "bg-white/10 text-gray-400 hover:bg-white/20"
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="overflow-x-auto">
+                  <div className="rounded-2xl shadow-2xl bg-gradient-to-br from-[#23263a]/80 to-[#6366f1]/10 p-2">
+                    <table className="w-full border-separate border-spacing-y-2">
+                      <thead>
+                        <tr className="bg-white/10 text-[#a5b4fc] rounded-xl">
+                          <th className="p-4 text-lg">Title</th>
+                          <th className="p-4 text-lg">Description</th>
+                          <th className="p-4 text-lg">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {templates
+                          .filter((t) => templateFilter === "all" || t.category === templateFilter)
+                          .map((template: any) => (
+                          <tr
+                            key={template._id}
+                            className="rounded-xl bg-black/60 hover:bg-white/10 transition shadow-xl"
+                          >
+                            <td className="p-4 rounded-l-xl font-semibold text-white/90 text-center">
+                              {template.title}
+                            </td>
+                            <td className="p-4 text-white/80 text-center">
+                              {template.description}
+                            </td>
+                            <td className="p-4 flex gap-2 rounded-r-xl justify-center">
+                              <button
+                                className="px-4 py-2 bg-blue-500/80 text-white rounded-lg hover:bg-blue-600 transition font-semibold"
+                                onClick={() => {
+                                  setEditTemplateId(template._id);
+                                  setEditTemplateForm({
+                                    title: template.title,
+                                    slug: template.slug,
+                                    description: template.description,
+                                    price: template.price,
+                                    visitLink: template.visitLink || "",
+                                    category: template.category,
+                                    features: template.features.join(", "),
+                                    published: template.published,
+                                  });
+                                  
+                                  // Populate images
+                                  const images: ImageFile[] = [];
+                                  if (template.mainImage && template.mainImage.url) {
+                                    images.push({
+                                      url: template.mainImage.url,
+                                      key: template.mainImage.key,
+                                      isMain: true
+                                    });
+                                  }
+                                  if (template.gallery && template.gallery.length > 0) {
+                                    template.gallery.forEach((g: any) => {
+                                      images.push({
+                                        url: g.url,
+                                        key: g.key,
+                                        isMain: false
+                                      });
+                                    });
+                                  }
+                                  setTemplateImages(images);
+                                  
+                                  setShowEditTemplateModal(true);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="px-4 py-2 bg-red-500/80 text-white rounded-lg hover:bg-red-600 transition font-semibold"
+                                onClick={() => handleDeleteTemplate(template._id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             )}
           </main>

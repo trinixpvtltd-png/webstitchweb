@@ -8,7 +8,15 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5000', 
+    'http://localhost:4000',
+    process.env.webstitch_url,
+    process.env.template_web_url
+  ].filter(Boolean),
+  credentials: true
+}));
 app.use(cookieParser());
 
 
@@ -21,6 +29,8 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/services', require('./routes/servicesRoutes'));
 app.use('/api/articles', require('./routes/articleRoutes'));
+app.use('/api/templates', require('./routes/templateRoutes'));
+app.use('/api/uploads', require('./routes/uploadRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -6,7 +6,6 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: 'No token provided. Authorization denied.' });
   }
   try {
-    
     const actualToken = token.startsWith('Bearer ') ? token.split(' ')[1] : token;
     const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
     req.user = decoded;
@@ -16,4 +15,14 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+const requireRole = (role) => {
+  return (req, res, next) => {
+    if (req.user && req.user.role === role) {
+      next();
+    } else {
+      res.status(403).json({ message: `Access denied. ${role}s only.` });
+    }
+  };
+};
+
+module.exports = { authMiddleware, requireRole };

@@ -56,6 +56,12 @@ export default function Navigation() {
     other: ["Web Development", "Social Media Marketing", "Graphic Designing"],
   };
 
+  // Portfolio URL from env (Vite). Falls back to local route so app doesn't crash when not set.
+  const portfolioUrl =
+    (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_PORTFOLIO_URL) ||
+    (typeof process !== "undefined" && process.env && process.env.VITE_PORTFOLIO_URL) ||
+    "/portfolio";
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -175,13 +181,14 @@ export default function Navigation() {
               )}
             </div>
 
-            <a
+            {/* <a
               href="/portfolio"
               className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
               data-testid="link-portfolio"
             >
               Portfolio
-            </a>
+            </a> */}
+            
             <a
               href="/blog"
               className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
@@ -196,12 +203,13 @@ export default function Navigation() {
             >
               Contact
             </a>
+            
             <a
-              href="/contact"
+              href={portfolioUrl}
               className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
               data-testid="link-contact"
             >
-              Templates
+              Template/portfolio
             </a>
           </div>
 

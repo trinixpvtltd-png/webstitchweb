@@ -298,9 +298,13 @@ export default function Blog() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-[#3f51b5] dark:text-[#a5b4fc]">
-                    No articles found for this category.
-                  </div>
+                  <>
+                    {/*
+                    <div className="text-center py-8 text-[#3f51b5] dark:text-[#a5b4fc]">
+                      No articles found for this category.
+                    </div>
+                    */}
+                  </>
                 )}
                 {filteredArticles.length > 6 && (
                   <div className="mt-12 text-center">

@@ -31,6 +31,73 @@ export async function deleteArticle(id: string) {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined
   });
 }
+
+// Template APIs
+export async function getTemplates() {
+  const token = localStorage.getItem('token');
+  return apiRequest('/api/templates/admin/all', { 
+    method: 'GET',
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined
+  });
+}
+
+export async function addTemplate(template: any) {
+  const token = localStorage.getItem('token');
+  return apiRequest('/api/templates', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    },
+    body: JSON.stringify(template)
+  });
+}
+
+export async function editTemplate(id: string, updates: any) {
+  const token = localStorage.getItem('token');
+  return apiRequest(`/api/templates/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    },
+    body: JSON.stringify(updates)
+  });
+}
+
+export async function deleteTemplate(id: string) {
+  const token = localStorage.getItem('token');
+  return apiRequest(`/api/templates/${id}`, {
+    method: 'DELETE',
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined
+  });
+}
+
+// Upload API
+export async function getPresignedUrl(filename: string, fileType: string) {
+  const token = localStorage.getItem('token');
+  return apiRequest('/api/uploads/presign', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    },
+    body: JSON.stringify({ filename, fileType })
+  });
+}
+
+export async function uploadFileToS3(url: string, file: File) {
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': file.type
+    },
+    body: file
+  });
+  if (!res.ok) throw new Error('Failed to upload file to S3');
+  return res;
+}
+
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export async function apiRequest(path: string, options: RequestInit) {
