@@ -60,7 +60,7 @@ export default function Navigation() {
   const portfolioUrl =
     (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_PORTFOLIO_URL) ||
     (typeof process !== "undefined" && process.env && process.env.VITE_PORTFOLIO_URL) ||
-    "/portfolio";
+    "/";
 
   return (
     <nav
