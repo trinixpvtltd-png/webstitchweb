@@ -22,12 +22,13 @@ interface Template {
 }
 
 interface TemplateGridProps {
-  category: string
+  category?: string
+  query?: string
   title: string
   description: string
 }
 
-export default function TemplateGrid({ category, title, description }: TemplateGridProps) {
+export default function TemplateGrid({ category, query, title, description }: TemplateGridProps) {
   const [templates, setTemplates] = useState<Template[]>([])
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null)
   const [loading, setLoading] = useState(true)
@@ -90,7 +91,7 @@ export default function TemplateGrid({ category, title, description }: TemplateG
   useEffect(() => {
     const loadTemplates = async () => {
       try {
-        const data = await fetchTemplates(category)
+        const data = await fetchTemplates(category, query)
         setTemplates(data)
       } catch (err) {
         setError("Failed to load templates")
@@ -100,7 +101,7 @@ export default function TemplateGrid({ category, title, description }: TemplateG
       }
     }
     loadTemplates()
-  }, [category])
+  }, [category, query])
 
   if (loading) return <div className="min-h-screen pt-20 text-center text-white">Loading...</div>
   if (error) return <div className="min-h-screen pt-20 text-center text-red-500">{error}</div>
@@ -195,7 +196,7 @@ export default function TemplateGrid({ category, title, description }: TemplateG
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedTemplate(null)}
-            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] bg-black/80 flex items-start justify-center pt-40 pb-8 px-4 overflow-y-auto"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
@@ -203,13 +204,13 @@ export default function TemplateGrid({ category, title, description }: TemplateG
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-black border border-gray-700 rounded-xl shadow-2xl w-full max-w-6xl max-h-[85vh] overflow-y-auto scrollbar-hide"
+              className="relative bg-black border border-gray-700 rounded-xl shadow-2xl w-full max-w-6xl mt-8"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedTemplate(null)}
-                className="fixed top-6 right-6 z-10 p-2 hover:bg-gray-900 rounded-lg transition-colors text-white"
+                className="absolute top-4 right-4 z-10 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-white"
               >
                 <X className="w-6 h-6" />
               </button>

@@ -1,9 +1,12 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
-export async function fetchTemplates(category?: string) {
+export async function fetchTemplates(category?: string, query?: string) {
   const url = new URL(`${API_URL}/templates`);
   if (category) {
     url.searchParams.append('category', category);
+  }
+  if (query) {
+    url.searchParams.append('q', query);
   }
   
   const res = await fetch(url.toString(), {

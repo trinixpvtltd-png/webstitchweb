@@ -1,14 +1,12 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import TemplateCategories from "./template-categories"
-import TemplateCarousel from "./template-carousel"
 
 export default function Featured() {
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full">
       {/* Featured Hero Section */}
-      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center min-h-screen px-6 py-12 lg:py-0">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center min-h-screen px-6 pt-40 pb-12 lg:py-0">
         {/* Image Section - Right side on desktop */}
         <div className="flex-1 h-[400px] lg:h-[800px] mb-8 lg:mb-0 lg:order-2">
           <Image
@@ -47,56 +45,6 @@ export default function Featured() {
           </div>
         </div>
       </div>
-
-      {/* Template Categories Section */}
-      <TemplateCategories />
-
-      {/* Template Carousel */}
-      <TemplateCarousel />
-
-      {/* Footer Section */}
-      <footer className="w-full bg-black border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
-          {/* Footer Links */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            {/* Services */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Services</h3>
-              <ul className="space-y-4">
-                <li><Link href="/3d-template" className="text-white hover:text-purple-400 transition-colors">3D Websites</Link></li>
-                <li><Link href="/2d-template" className="text-white hover:text-purple-400 transition-colors">2D Websites</Link></li>
-                <li><Link href="/app-template" className="text-white hover:text-purple-400 transition-colors">Web Apps</Link></li>
-                <li><Link href="/chatbot" className="text-white hover:text-purple-400 transition-colors">AI Chatbots</Link></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Company</h3>
-              <ul className="space-y-4">
-                <li><Link href="/about" className="text-white hover:text-purple-400 transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="text-white hover:text-purple-400 transition-colors">Contact</Link></li>
-                <li><Link href="/ai" className="text-white hover:text-purple-400 transition-colors">AI Assistant</Link></li>
-              </ul>
-            </div>
-
-            {/* Connect */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Connect</h3>
-              <ul className="space-y-4">
-                <li><a href="mailto:contact@webstitch.com" className="text-white hover:text-purple-400 transition-colors">contact@webstitch.com</a></li>
-                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition-colors">LinkedIn</a></li>
-                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition-colors">Twitter</a></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <div className="pt-8 border-t border-gray-800 text-right">
-            <p className="text-gray-500 text-sm">© 2025 WebStitch. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

@@ -1,13 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { useScroll, useTransform, motion } from "framer-motion"
 import { useRef } from "react"
-import TemplateCategories from "./template-categories"
-import TemplateCarousel from "./template-carousel"
 
-export default function Section() {
+export default function Promo() {
   const container = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({
     target: container,
@@ -16,7 +13,7 @@ export default function Section() {
   const y = useTransform(scrollYProgress, [0, 1], ["-10vh", "10vh"])
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full">
       {/* Promo Hero Section */}
       <div
         ref={container}
@@ -29,11 +26,11 @@ export default function Section() {
           </motion.div>
         </div>
 
-        <h3 className="absolute top-24 right-6 text-white uppercase z-10 text-sm md:text-base lg:text-lg font-bold">
+        <h3 className="absolute top-48 right-6 text-white uppercase z-10 text-sm md:text-base lg:text-lg font-bold">
           Your Vision, Our Code.
         </h3>
 
-        <p className="absolute bottom-24 right-6 text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-5xl z-10">
+        <p className="absolute bottom-32 right-6 text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-5xl z-10">
           We transform your ideas into powerful digital experiences. From concept to launch, WebStitch delivers websites that captivate, convert, and scale with your business.
         </p>
 
@@ -45,56 +42,6 @@ export default function Section() {
           </svg>
         </div>
       </div>
-
-      {/* Template Categories Section */}
-      <TemplateCategories />
-
-      {/* Template Carousel */}
-      <TemplateCarousel />
-
-      {/* Footer Section */}
-      <footer className="w-full bg-black border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
-          {/* Footer Links */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            {/* Services */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Services</h3>
-              <ul className="space-y-4">
-                <li><Link href="/3d-template" className="text-white hover:text-purple-400 transition-colors">3D Websites</Link></li>
-                <li><Link href="/2d-template" className="text-white hover:text-purple-400 transition-colors">2D Websites</Link></li>
-                <li><Link href="/app-template" className="text-white hover:text-purple-400 transition-colors">Web Apps</Link></li>
-                <li><Link href="/chatbot" className="text-white hover:text-purple-400 transition-colors">AI Chatbots</Link></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Company</h3>
-              <ul className="space-y-4">
-                <li><Link href="/about" className="text-white hover:text-purple-400 transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="text-white hover:text-purple-400 transition-colors">Contact</Link></li>
-                <li><Link href="/ai" className="text-white hover:text-purple-400 transition-colors">AI Assistant</Link></li>
-              </ul>
-            </div>
-
-            {/* Connect */}
-            <div>
-              <h3 className="text-gray-400 uppercase text-sm font-semibold tracking-wider mb-6">Connect</h3>
-              <ul className="space-y-4">
-                <li><a href="mailto:contact@webstitch.com" className="text-white hover:text-purple-400 transition-colors">contact@webstitch.com</a></li>
-                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition-colors">LinkedIn</a></li>
-                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition-colors">Twitter</a></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <div className="pt-8 border-t border-gray-800 text-right">
-            <p className="text-gray-500 text-sm">© 2025 WebStitch. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

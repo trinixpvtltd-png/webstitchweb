@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -9,6 +10,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [categoryOpen, setCategoryOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     const checkUser = () => {
@@ -37,6 +40,14 @@ export default function Navbar() {
     window.location.href = "/"
   }
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
+      setIsOpen(false)
+    }
+  }
+
   const categoryLinks = [
     { label: "3D Templates", href: "/3d-template" },
     { label: "2D Templates", href: "/2d-template" },
@@ -45,14 +56,24 @@ export default function Navbar() {
     { label: "AI", href: "/ai" },
   ]
 
+  // Old secondary nav links - commented out
+  // const secondaryNavLinks = [
+  //   { label: "Home", href: "/" },
+  //   { label: "Trending Templates", href: "/trending" },
+  //   { label: "Categories", href: "#", hasDropdown: true },
+  //   { label: "New Arrivals", href: "/new-arrivals" },
+  //   { label: "Business Templates", href: "/business-templates" },
+  //   { label: "Designers", href: "/designers" },
+  //   { label: "Offers / Discounts", href: "/offers" },
+  // ]
+
   const secondaryNavLinks = [
-    { label: "Home", href: "/" },
-    { label: "Trending Templates", href: "/trending" },
-    { label: "Categories", href: "#", hasDropdown: true },
-    { label: "New Arrivals", href: "/new-arrivals" },
-    { label: "Business Templates", href: "/business-templates" },
-    { label: "Designers", href: "/designers" },
-    { label: "Offers / Discounts", href: "/offers" },
+    { label: "3D Template", href: "/3d-template" },
+    { label: "2D Template", href: "/2d-template" },
+    { label: "App Template", href: "/app-template" },
+    { label: "Chatbot", href: "/chatbot" },
+    { label: "AI", href: "/ai" },
+    { label: "Contact", href: "/contact" },
   ]
 
   const menuVariants = {
@@ -103,7 +124,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center: Search Box */}
-          <form className="flex-1 max-w-2xl mx-8 hidden md:flex" onSubmit={e => e.preventDefault()}>
+          <form className="flex-1 max-w-2xl mx-8 hidden md:flex" onSubmit={handleSearch}>
             <div className="relative w-full flex">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-400">
@@ -112,6 +133,8 @@ export default function Navbar() {
               </div>
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search templates, designs, themes..."
                 className="w-full pl-12 pr-4 py-2.5 rounded-l-xl border-2 border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:bg-gray-800 transition-all duration-300"
               />
@@ -160,52 +183,13 @@ export default function Navbar() {
       <div className="w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 px-4 sm:px-6 lg:px-8 hidden md:block">
         <div className="flex justify-start items-center h-11 gap-1 max-w-7xl mx-auto">
           {secondaryNavLinks.map((link) => (
-            link.hasDropdown ? (
-              <div 
-                key={link.label}
-                className="relative"
-                onMouseEnter={() => setCategoryOpen(true)}
-                onMouseLeave={() => setCategoryOpen(false)}
-              >
-                <button
-                  className="text-sm font-medium text-gray-300 transition-all duration-300 hover:text-white hover:bg-gray-800 rounded-lg px-4 py-2 whitespace-nowrap flex items-center gap-1.5 border border-transparent hover:border-gray-700"
-                >
-                  {link.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${categoryOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {categoryOpen && (
-                    <motion.div
-                      variants={dropdownVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      className="absolute top-full left-0 mt-2 w-56 bg-gray-900 backdrop-blur-md border border-gray-700 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
-                    >
-                      <div className="py-2">
-                        {categoryLinks.map((cat) => (
-                          <Link
-                            key={cat.href}
-                            href={cat.href}
-                            className="block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition-all duration-200 border-l-2 border-transparent hover:border-purple-500"
-                          >
-                            {cat.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-300 transition-all duration-300 hover:text-white hover:bg-gray-800 rounded-lg px-4 py-2 whitespace-nowrap border border-transparent hover:border-gray-700"
-              >
-                {link.label}
-              </Link>
-            )
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-gray-300 transition-all duration-300 hover:text-white hover:bg-gray-800 rounded-lg px-4 py-2 whitespace-nowrap border border-transparent hover:border-gray-700"
+            >
+              {link.label}
+            </Link>
           ))}
         </div>
       </div>
@@ -222,9 +206,11 @@ export default function Navbar() {
           >
             <div className="py-4 px-4 space-y-2">
               {/* Mobile Search */}
-              <form className="flex mb-4" onSubmit={e => e.preventDefault()}>
+              <form className="flex mb-4" onSubmit={handleSearch}>
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search templates..."
                   className="w-full px-4 py-2 rounded-l-lg border border-border bg-white/80 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 />
