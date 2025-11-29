@@ -11,6 +11,7 @@ import Blog from "@/pages/blog";
 import Portfolio from "@/pages/portfolio";
 //import Careers from "@/pages/careers";
 import Contact from "@/pages/contact";
+import Community from "@/pages/community";
 import NotFound from "@/pages/not-found";
 import LoginPage from "@/pages/login";
 import AdminDashboard from "@/pages/admin_dashboard";
@@ -28,6 +29,7 @@ function Router() {
       {/* <Route path="/careers" component={Careers} /> */}
       <Route path="/blog" component={Blog} />
       <Route path="/contact" component={Contact} />
+      <Route path="/community" component={Community} />
       <Route path="/login" component={LoginPage} />
       <Route path="/admin_dashboard" component={AdminDashboard} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
