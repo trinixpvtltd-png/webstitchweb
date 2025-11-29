@@ -119,14 +119,11 @@
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
+import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
 import InsightsSection from "@/components/InsightsSection";
-import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
-import Scene3D from "../components/Scene3D";
 import Universe3D from "@/components/Universe3D";
 
 export default function Home() {
@@ -140,12 +137,10 @@ export default function Home() {
         <Navigation />
         <main>
           <HeroSection />
-          <StatsSection />
+          <AboutSection />
           <ServicesSection />
-          <TestimonialsSection />
-          <InsightsSection />
-          <FAQSection />
           <CTASection />
+          <InsightsSection />
         </main>
         <Footer />
       </div>

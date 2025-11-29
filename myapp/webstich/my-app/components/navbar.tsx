@@ -222,7 +222,7 @@ export default function Navbar() {
               </form>
 
               {/* Main Nav Links */}
-              {secondaryNavLinks.filter(link => !link.hasDropdown).map((link, i) => (
+              {secondaryNavLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
                   variants={linkVariants}

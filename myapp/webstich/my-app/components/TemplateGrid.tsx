@@ -196,7 +196,8 @@ export default function TemplateGrid({ category, query, title, description }: Te
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedTemplate(null)}
-            className="fixed inset-0 z-[9999] bg-black/80 flex items-start justify-center pt-40 pb-8 px-4 overflow-y-auto"
+            className="fixed inset-0 z-[9999] bg-black/90 flex items-start justify-center px-4 overflow-y-auto"
+            style={{ paddingTop: '140px', paddingBottom: '40px' }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
@@ -204,7 +205,7 @@ export default function TemplateGrid({ category, query, title, description }: Te
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-black border border-gray-700 rounded-xl shadow-2xl w-full max-w-6xl mt-8"
+              className="relative bg-black border border-gray-700 rounded-xl shadow-2xl w-full max-w-6xl"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {/* Close Button */}

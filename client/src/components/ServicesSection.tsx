@@ -97,7 +97,7 @@ export default function ServicesSection() {
   }, []);
 
   return (
-    <section id="services" className="py-24 md:py-32 bg-muted/30">
+    <section id="services" className="py-24 md:py-32 bg-muted/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2
@@ -138,7 +138,7 @@ export default function ServicesSection() {
             {services.map((service, index) => (
               <Card
                 key={index}
-                className="p-8 hover:-translate-y-1 transition-transform duration-300"
+                className="p-8 hover:-translate-y-1 transition-transform duration-300 bg-black/40 backdrop-blur-sm border-white/10"
                 data-testid={`card-service-${index}`}
               >
                 <service.icon

@@ -71,9 +71,9 @@ export default function Navigation() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-12">
+        <div className="flex items-center justify-between h-20">
           <div
-            className="text-xl font-semibold tracking-tight"
+            className="text-xl font-bold tracking-tight"
             data-testid="text-logo"
           >
             WebStitch
@@ -83,7 +83,7 @@ export default function Navigation() {
           <div className="hidden md:flex items-center gap-8">
             <a
               href="/home"
-              className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
+              className="text-sm font-bold hover-elevate px-3 py-1 rounded-md transition-colors"
               data-testid="link-home"
             >
               Home
@@ -96,7 +96,7 @@ export default function Navigation() {
             >
               <a
                 href="/services"
-                className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors flex items-center gap-1"
+                className="text-sm font-bold hover-elevate px-3 py-1 rounded-md transition-colors flex items-center gap-1"
                 data-testid="link-services"
               >
                 Services
@@ -191,26 +191,34 @@ export default function Navigation() {
             
             <a
               href="/blog"
-              className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
+              className="text-sm font-bold hover-elevate px-3 py-1 rounded-md transition-colors"
               data-testid="link-blog"
             >
-              Blog
+              Updates
             </a>
             <a
               href="/contact"
-              className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
+              className="text-sm font-bold hover-elevate px-3 py-1 rounded-md transition-colors"
               data-testid="link-contact"
             >
               Contact
             </a>
-            
             <a
-              href={portfolioUrl}
-              className="text-sm hover-elevate px-3 py-1 rounded-md transition-colors"
-              data-testid="link-contact"
+              href="/community"
+              className="text-sm font-bold hover-elevate px-3 py-1 rounded-md transition-colors"
+              data-testid="link-community"
             >
-              Template/portfolio
+              Community
             </a>
+
+            <Button
+              size="sm"
+              className="font-bold"
+              asChild
+              data-testid="link-build-software"
+            >
+              <a href={portfolioUrl}>Build your software</a>
+            </Button>
           </div>
 
           <div className="hidden md:flex items-center gap-2">
@@ -219,6 +227,7 @@ export default function Navigation() {
               <Button
                 size="sm"
                 variant="outline"
+                className="font-bold"
                 onClick={() => (window.location.href = "/admin_dashboard")}
               >
                 Admin Dashboard
@@ -227,6 +236,7 @@ export default function Navigation() {
             {!isLoggedIn ? (
               <Button
                 size="sm"
+                className="font-bold"
                 data-testid="button-cta"
                 onClick={() => (window.location.href = "/login")}
               >
@@ -236,6 +246,7 @@ export default function Navigation() {
               <Button
                 size="sm"
                 variant="outline"
+                className="font-bold"
                 data-testid="button-logout"
                 onClick={handleLogout}
               >
@@ -270,49 +281,56 @@ export default function Navigation() {
             <div className="flex flex-col gap-2">
               <a
                 href="/home"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-home"
               >
                 Home
               </a>
               <a
                 href="/about"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-about"
               >
                 About
               </a>
               <a
                 href="/services"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-services"
               >
                 Services
               </a>
               <a
                 href="/portfolio"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-portfolio"
               >
                 Portfolio
               </a>
               <a
                 href="/blog"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
-                data-testid="link-mobile-blog"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
+              data-testid="link-mobile-blog"
+            >
+              Updates
+            </a>
+              <a
+                href="/community"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
+                data-testid="link-mobile-community"
               >
-                Blog
+                Community
               </a>
               <a
                 href="/careers"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-careers"
               >
                 Careers
               </a>
               <a
                 href="/contact"
-                className="text-sm hover-elevate px-3 py-2 rounded-md"
+                className="text-sm font-bold hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-mobile-contact"
               >
                 Contact
@@ -320,7 +338,7 @@ export default function Navigation() {
               {isLoggedIn && userRole === "admin" && (
                 <Button
                   size="sm"
-                  className="mt-2"
+                  className="mt-2 font-bold"
                   variant="outline"
                   onClick={() => (window.location.href = "/admin_dashboard")}
                 >
@@ -330,7 +348,7 @@ export default function Navigation() {
               {!isLoggedIn ? (
                 <Button
                   size="sm"
-                  className="mt-2"
+                  className="mt-2 font-bold"
                   data-testid="button-mobile-cta"
                   onClick={() => (window.location.href = "/login")}
                 >
@@ -339,7 +357,7 @@ export default function Navigation() {
               ) : (
                 <Button
                   size="sm"
-                  className="mt-2"
+                  className="mt-2 font-bold"
                   variant="outline"
                   data-testid="button-mobile-logout"
                   onClick={handleLogout}
