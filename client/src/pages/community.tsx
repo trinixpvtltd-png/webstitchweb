@@ -6,14 +6,14 @@ import { Users, MessageCircle, Sparkles } from "lucide-react";
 
 export default function Community() {
   return (
-    <div className="min-h-screen relative overflow-hidden bg-black pt-24 pb-12">
+    <div className="min-h-screen relative overflow-hidden bg-black pt-24 ">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Universe3D />
       </div>
 
       <div className="relative z-10">
         <Navigation />
-        <main className="min-h-screen flex items-center justify-center px-4">
+        <main className="min-h-screen flex items-center justify-center px-4 pb-12">
           <div className="text-center max-w-4xl mx-auto">
             {/* Icon */}
             <motion.div
@@ -86,7 +86,7 @@ export default function Community() {
               </div>
             </motion.div>
           </div>
-        </main>
+        </main >
         <Footer />
       </div>
     </div>

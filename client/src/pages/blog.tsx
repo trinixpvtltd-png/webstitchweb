@@ -73,24 +73,26 @@ export default function Blog() {
       <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Hero Section */}
         <section className="w-full flex flex-col items-center justify-center min-h-[40vh] px-4 mb-12">
-          <div className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4">
-              Tech Insights & Trends
-            </h1>
-            <p className="mt-2 text-lg text-[#a5b4fc]">
-              Stay ahead of the curve with expert insights on web development,
-              digital marketing, and emerging technologies from the WebStitch
-              team.
-            </p>
-            <div className="relative max-w-lg mx-auto mt-8 w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#7c3aed]" />
-              <Input
-                type="search"
-                placeholder="Search articles..."
-                className="pl-10 bg-white border border-[#c7d2fe] focus:border-[#7c3aed] text-[#1a237e] dark:bg-[#23263a] dark:border-[#353a50] dark:text-white"
-              />
+          <Reveal>
+            <div className="relative max-w-3xl w-full mx-auto px-4 py-8 flex flex-col items-center text-center">
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#7c3aed] via-[#6366f1] to-[#a5b4fc] bg-clip-text text-transparent drop-shadow-2xl mb-4">
+                Tech Insights & Trends
+              </h1>
+              <p className="mt-2 text-lg text-white/85">
+                Stay ahead of the curve with expert insights on web development,
+                digital marketing, and emerging technologies from the WebStitch
+                team.
+              </p>
+              <div className="relative max-w-lg mx-auto mt-8 w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c7d2fe]" />
+                <Input
+                  type="search"
+                  placeholder="Search articles..."
+                  className="pl-10 bg-transparent border border-white/20 focus:border-[#7c3aed] text-white placeholder:text-white/60"
+                />
+              </div>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         {/* Categories Tabs */}
@@ -219,6 +221,7 @@ export default function Blog() {
         </section>
 
         {/* Latest Articles */}
+        {/*
         <section className="py-16 bg-transparent">
           <div
             className="max-w-7xl mx-auto px-6 lg:px-12 bg-[#23263a]/80 rounded-3xl p-8"
@@ -299,11 +302,9 @@ export default function Blog() {
                   </div>
                 ) : (
                   <>
-                    {/*
                     <div className="text-center py-8 text-[#3f51b5] dark:text-[#a5b4fc]">
                       No articles found for this category.
                     </div>
-                    */}
                   </>
                 )}
                 {filteredArticles.length > 6 && (
@@ -321,16 +322,17 @@ export default function Blog() {
             )}
           </div>
         </section>
-
+        */}
+        
         {/* Newsletter Section */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <Reveal>
-              <div className="rounded-2xl bg-white border border-[#e3e8f0] p-8 md:p-10 text-center shadow-lg dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
-                <h3 className="text-2xl md:text-3xl font-bold text-[#1a237e] dark:text-white">
+              <div className="p-0 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-white">
                   Stay Updated with Tech Insights
                 </h3>
-                <p className="text-[#3f51b5]/80 max-w-2xl mx-auto mt-4 mb-6 dark:text-[#a5b4fc]">
+                <p className="text-white/80 max-w-2xl mx-auto mt-4 mb-6">
                   Subscribe to our newsletter and get the latest articles,
                   updates, and relevant insights delivered to your inbox.
                 </p>

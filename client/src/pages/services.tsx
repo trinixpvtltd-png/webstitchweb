@@ -37,35 +37,16 @@ import { motion } from "framer-motion";
 import { getServices } from "../lib/Api";
 import Astro3D from "../components/Astro3D";
 
+const portfolioUrl =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_PORTFOLIO_URL) ||
+  (typeof process !== "undefined" && process.env && process.env.VITE_PORTFOLIO_URL) ||
+  "http://webstitchnextjs.s3-website.ap-south-1.amazonaws.com";
+
 export default function Services() {
   // State for services data
   const [services, setServices] = useState<any[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
   const [servicesError, setServicesError] = useState<string | null>(null);
-
-  // Stats for achievements
-  const stats = [
-    {
-      number: "150+",
-      label: "Projects Completed",
-      icon: <Zap className="h-10 w-10 text-primary" />,
-    },
-    {
-      number: "50+",
-      label: "Expert Specialists",
-      icon: <Globe2 className="h-10 w-10 text-primary" />,
-    },
-    {
-      number: "98%",
-      label: "Client Satisfaction",
-      icon: <BrainCircuit className="h-10 w-10 text-primary" />,
-    },
-    {
-      number: "4.9/5",
-      label: "Average Rating",
-      icon: <BarChart3 className="h-10 w-10 text-primary" />,
-    },
-  ];
 
   // Fetch services from backend
   useEffect(() => {
@@ -267,9 +248,9 @@ export default function Services() {
       <Navigation />
       <main className="pt-24 pb-16 flex flex-col items-center">
         {/* Hero Section */}
-        <section className="w-full flex flex-col items-center justify-center min-h-[60vh] px-4">
+        <section className="w-full flex flex-col items-center justify-center min-h-[40vh] px-4">
           <motion.div
-            className="relative max-w-3xl w-full mx-auto rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl px-8 py-16 flex flex-col items-center text-center"
+            className="relative max-w-3xl w-full mx-auto text-center space-y-4"
             initial={{ opacity: 0, y: 60, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.1, ease: "easeOut" }}
@@ -301,85 +282,15 @@ export default function Services() {
             </motion.p>
           </motion.div>
         </section>
-        {/* ...existing code... (timeline section removed) */}
-        {/* Achievements Section (Stats) */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-12 mt-6">
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(15, 10, 30, 0.85) 0%, rgba(25, 15, 45, 0.8) 100%)",
-              backdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              WebkitBackdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              border: "2px solid rgba(255, 255, 255, 0.2)",
-              boxShadow: `
-      0 8px 32px 0 rgba(0, 0, 0, 0.6),
-      0 2px 8px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2)
-    `,
-              borderRadius: "20px",
-              padding: "40px 30px",
-            }}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 40, scale: 0.96 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  viewport={{ once: true }}
-                >
-                  <div
-                    className="flex flex-col justify-between h-full bg-[#23263a] rounded-2xl shadow-xl border-none px-8 py-10 text-center dark:bg-[#23263a]"
-                    style={{ minHeight: "260px" }}
-                  >
-                    <div className="flex justify-center mb-6">{stat.icon}</div>
-                    <div>
-                      <div
-                        className="text-5xl font-extrabold text-white mb-2"
-                        style={{ fontFamily: "inherit" }}
-                      >
-                        {stat.number}
-                      </div>
-                      <div
-                        className="text-lg font-medium text-[#a5b4fc] mb-8"
-                        style={{ fontFamily: "inherit" }}
-                      >
-                        {stat.label}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
         {/* Premium Services */}
         <section className="py-16">
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(15, 10, 30, 0.85) 0%, rgba(25, 15, 45, 0.8) 100%)",
-              backdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              WebkitBackdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              border: "2px solid rgba(255, 255, 255, 0.2)",
-              boxShadow: `
-      0 8px 32px 0 rgba(0, 0, 0, 0.6),
-      0 2px 8px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2)
-    `,
-              borderRadius: "20px",
-              padding: "40px 30px",
-            }}
-          >
+          <div className="px-4 py-10">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-extrabold mb-4 text-[#1a237e] drop-shadow-lg dark:text-white">
+                <h2 className="text-3xl font-extrabold mb-4 text-white">
                   Our Premium Services
                 </h2>
-                <p className="text-[#5c6bc0] dark:text-[#a5b4fc]">
+                <p className="text-white/80">
                   Comprehensive digital solutions designed to transform your
                   business.
                 </p>
@@ -397,10 +308,10 @@ export default function Services() {
                 ) : (
                   services.map((service, index) => (
                     <Reveal as="div" delay={index * 100} key={service.title}>
-                      <Card className="bg-white rounded-2xl border border-[#e3e8f0] shadow-xl hover:shadow-2xl transition-all h-full flex flex-col dark:bg-[#23263a] dark:border-[#353a50] dark:shadow-2xl">
+                      <Card className="transition-all h-full flex flex-col text-white bg-white/10 backdrop-blur-md border-white/10">
                         <CardHeader>
                           <div className="flex items-start justify-between">
-                            <div className="p-3 bg-[#ede9fe] rounded-xl dark:bg-[#353a50]">
+                            <div className="p-3">
                               {service.icon ? (
                                 <img
                                   src={service.icon}
@@ -410,17 +321,17 @@ export default function Services() {
                               ) : (
                                 <div className="w-8 h-8 flex items-center justify-center">
                                   {index === 0 ? (
-                                    <BrainCircuit className="w-6 h-6 text-primary" />
+                                    <BrainCircuit className="w-6 h-6" />
                                   ) : index === 1 ? (
-                                    <Cpu className="w-6 h-6 text-primary" />
+                                    <Cpu className="w-6 h-6" />
                                   ) : index === 2 ? (
-                                    <Database className="w-6 h-6 text-primary" />
+                                    <Database className="w-6 h-6" />
                                   ) : index === 3 ? (
-                                    <MonitorSmartphone className="w-6 h-6 text-primary" />
+                                    <MonitorSmartphone className="w-6 h-6" />
                                   ) : index === 4 ? (
-                                    <Code className="w-6 h-6 text-primary" />
+                                    <Code className="w-6 h-6" />
                                   ) : (
-                                    <BarChart3 className="w-6 h-6 text-primary" />
+                                    <BarChart3 className="w-6 h-6" />
                                   )}
                                 </div>
                               )}
@@ -434,7 +345,7 @@ export default function Services() {
                                       <Badge
                                         key={tagIndex}
                                         variant="outline"
-                                        className="text-xs bg-[#f3f4f6] text-[#374151] border-[#d1d5db] dark:bg-[#374151] dark:text-[#f3f4f6] dark:border-[#4b5563]"
+                                        className="text-xs text-white"
                                       >
                                         {tag}
                                       </Badge>
@@ -444,23 +355,23 @@ export default function Services() {
                               {service.isPopular && (
                                 <Badge
                                   variant="secondary"
-                                  className="bg-[#7c3aed] text-white font-bold px-3 py-1 rounded-full shadow dark:bg-[#a78bfa]"
+                                  className="bg-white/20 text-white font-bold px-3 py-1 rounded-full shadow"
                                 >
                                   Popular
                                 </Badge>
                               )}
                             </div>
                           </div>
-                          <CardTitle className="mt-4 text-[#1a237e] font-bold dark:text-white">
+                          <CardTitle className="mt-4 text-white font-bold">
                             {service.title}
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="flex-grow">
-                          <p className="mb-4 text-[#3f51b5] dark:text-[#a5b4fc]">
+                          <p className="mb-4 text-white/80">
                             {service.description}
                           </p>
                           <div>
-                            <h4 className="font-medium mb-2 text-[#1a237e] dark:text-white">
+                            <h4 className="font-medium mb-2 text-white">
                               Key Benefits:
                             </h4>
                             <ul className="space-y-2">
@@ -468,9 +379,9 @@ export default function Services() {
                                 (benefit: string, i: number) => (
                                   <li
                                     key={i}
-                                    className="flex items-center gap-2 text-[#3f51b5] dark:text-[#a5b4fc]"
+                                    className="flex items-center gap-2 text-white/80"
                                   >
-                                    <div className="w-1 h-1 bg-[#7c3aed] rounded-full dark:bg-[#a78bfa]"></div>
+                                    <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
                                     {benefit}
                                   </li>
                                 )
@@ -494,36 +405,48 @@ export default function Services() {
             </div>
           </div>
         </section>
+        {/* Mid-page CTA */}
+        <section className="py-12">
+          <div className="max-w-5xl mx-auto px-6 lg:px-12">
+            <div className="px-8 py-12 text-center text-white">
+              <h3 className="text-3xl font-bold mb-4">Build with WebStitch</h3>
+              <p className="text-white/80 max-w-3xl mx-auto mb-8">
+                From AI automations to full product builds, we design and ship software that keeps your business ahead.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-white text-neutral-900 hover:bg-white/90"
+                  onClick={() => (window.location.href = "/contact")}
+                >
+                  Start a project
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                                  className="border-white text-white hover:bg-white/10"
+                                  onClick={() => window.open(portfolioUrl, "_blank")}
+                                >
+                                  See our work
+                                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* Custom Quote Section */}
         <section className="py-16">
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(15, 10, 30, 0.85) 0%, rgba(25, 15, 45, 0.8) 100%)",
-              backdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              WebkitBackdropFilter: "blur(16px) contrast(120%) brightness(90%)",
-              border: "2px solid rgba(255, 255, 255, 0.2)",
-              boxShadow: `
-      0 8px 32px 0 rgba(0, 0, 0, 0.6),
-      0 2px 8px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2)
-    `,
-              borderRadius: "20px",
-              padding: "40px 30px",
-            }}
-          >
+          <div className="px-4 py-10">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
               <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold">Get Your Custom Quote</h2>
-                <p className="text-muted-foreground mt-2">
+                <h2 className="text-3xl font-bold text-white">Get Your Custom Quote</h2>
+                <p className="text-white/80 mt-2">
                   Use our interactive calculator to get an instant estimate for
                   your project
                 </p>
               </div>
 
-              <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6 md:p-10 dark:bg-[#23263a] dark:border-[#353a50]">
-                <h3 className="text-xl font-semibold mb-6 dark:text-white">
+              <div className="p-0 text-white">
+                <h3 className="text-xl font-semibold mb-6">
                   Interactive Pricing Calculator
                 </h3>
 
@@ -538,18 +461,18 @@ export default function Services() {
                         value={selectedService}
                         onValueChange={setSelectedService}
                       >
-                        <SelectTrigger className="bg-white text-black border border-white focus:ring-2 focus:ring-[#7c3aed]">
+                        <SelectTrigger className="bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-[#7c3aed]">
                           <SelectValue
                             placeholder="Choose a service"
-                            className="text-black"
+                            className="text-white"
                           />
                         </SelectTrigger>
-                        <SelectContent className="bg-white text-black">
+                        <SelectContent className="bg-neutral-900/90 text-white backdrop-blur-xl border border-white/10">
                           {services.map((service) => (
                             <SelectItem
                               key={service.title}
                               value={service.title}
-                              className="bg-white text-black hover:bg-[#ede9fe]"
+                              className="hover:bg-white/10 focus:bg-white/10"
                             >
                               {service.title}
                             </SelectItem>
@@ -794,336 +717,89 @@ export default function Services() {
           </div>
         </section>
         {/* Delivery Process */}
-        <section>
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(10, 5, 25, 0.92) 0%, rgba(20, 10, 40, 0.88) 100%)",
-              backdropFilter: "blur(8px) contrast(130%)",
-              WebkitBackdropFilter: "blur(8px) contrast(130%)",
-              border: "2px solid rgba(255, 255, 255, 0.25)",
-              boxShadow: `
-      0 12px 40px 0 rgba(0, 0, 0, 0.7),
-      0 4px 12px 0 rgba(0, 0, 0, 0.5),
-      inset 0 2px 0 rgba(255, 255, 255, 0.3)
-    `,
-              borderRadius: "20px",
-              padding: "40px 30px",
-            }}
-          >
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold mb-2 dark:text-white">
-                  How We Deliver Excellence
-                </h2>
-                <p className="text-muted-foreground dark:text-[#a5b4fc]">
-                  Our proven methodology ensures successful project delivery
-                  every time
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-2 dark:text-white">
+                How We Deliver Excellence
+              </h2>
+              <p className="text-muted-foreground dark:text-[#a5b4fc]">
+                Our proven methodology ensures successful project delivery every time.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+              <Button
+                variant={activeDeliveryTab === "ai" ? "default" : "outline"}
+                onClick={() => setActiveDeliveryTab("ai")}
+              >
+                AI Solutions
+              </Button>
+              <Button
+                variant={activeDeliveryTab === "web" ? "default" : "outline"}
+                onClick={() => setActiveDeliveryTab("web")}
+              >
+                Web Development
+              </Button>
+              <Button
+                variant={activeDeliveryTab === "mobile" ? "default" : "outline"}
+                onClick={() => setActiveDeliveryTab("mobile")}
+              >
+                Mobile Apps
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                {(activeDeliveryTab === "ai"
+                  ? aiSolutionsSteps
+                  : activeDeliveryTab === "web"
+                  ? webDevelopmentSteps
+                  : mobileAppsSteps
+                ).map((step, index) => (
+                  <Reveal key={step.id} delay={index * 100}>
+                    <div className="flex gap-4 p-4 transition-all">
+                      <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
+                        {step.id}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium">{step.title}</h3>
+                          <div className="text-xs py-0.5 px-2 bg-neutral-800/40 rounded-full">
+                            {step.time}
+                          </div>
+                        </div>
+                        <p className="text-foreground/80 mt-1 text-sm">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+
+              <div className="p-0">
+                <h3 className="text-lg font-semibold mb-4">Discovery & Planning</h3>
+                <p className="text-foreground/80 text-sm mb-4">
+                  Understanding your business goals and technical requirements.
                 </p>
-              </div>
-
-              {/* Service type tabs */}
-              <div className="flex flex-wrap justify-center gap-4 mb-10">
-                <Button
-                  variant={activeDeliveryTab === "ai" ? "default" : "outline"}
-                  className={`flex items-center gap-2 min-w-[160px] ${
-                    activeDeliveryTab === "ai"
-                      ? "bg-neutral-100 hover:bg-neutral-700"
-                      : ""
-                  }`}
-                  onClick={() => setActiveDeliveryTab("ai")}
-                >
-                  <BrainCircuit className="h-5 w-5" />
-                  AI Solutions
-                </Button>
-                <Button
-                  variant={activeDeliveryTab === "web" ? "default" : "outline"}
-                  className={`flex items-center gap-2 min-w-[160px] ${
-                    activeDeliveryTab === "web"
-                      ? "bg-neutral-100 hover:bg-neutral-700"
-                      : ""
-                  }`}
-                  onClick={() => setActiveDeliveryTab("web")}
-                >
-                  <Globe2 className="h-5 w-5" />
-                  Web Development
-                </Button>
-                <Button
-                  variant={
-                    activeDeliveryTab === "mobile" ? "default" : "outline"
-                  }
-                  className={`flex items-center gap-2 min-w-[160px] ${
-                    activeDeliveryTab === "mobile"
-                      ? "bg-neutral-100 hover:bg-neutral-700"
-                      : ""
-                  }`}
-                  onClick={() => setActiveDeliveryTab("mobile")}
-                >
-                  <MonitorSmartphone className="h-5 w-5" />
-                  Mobile Apps
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Left column - process steps */}
-                <div className="space-y-6">
-                  {activeDeliveryTab === "ai" &&
-                    aiSolutionsSteps.map((step, index) => (
-                      <Reveal key={step.id} delay={index * 100}>
-                        <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all dark:hover:bg-[#23263a] dark:border-[#353a50]">
-                          <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
-                            {step.id}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-medium">{step.title}</h3>
-                              <div className="text-xs py-0.5 px-2 bg-neutral-800/40 rounded-full">
-                                {step.time}
-                              </div>
-                            </div>
-                            <p className="text-foreground/80 mt-1 text-sm">
-                              {step.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Reveal>
-                    ))}
-
-                  {activeDeliveryTab === "web" &&
-                    webDevelopmentSteps.map((step, index) => (
-                      <Reveal key={step.id} delay={index * 100}>
-                        <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all">
-                          <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
-                            {step.id}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-medium">{step.title}</h3>
-                              <div className="text-xs py-0.5 px-2 bg-neutral-800/40 rounded-full">
-                                {step.time}
-                              </div>
-                            </div>
-                            <p className="text-foreground/80 mt-1 text-sm">
-                              {step.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Reveal>
-                    ))}
-
-                  {activeDeliveryTab === "mobile" &&
-                    mobileAppsSteps.map((step, index) => (
-                      <Reveal key={step.id} delay={index * 100}>
-                        <div className="flex gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-neutral-200/10 hover-elevate transition-all">
-                          <div className="flex items-center justify-center h-9 w-9 shrink-0 rounded-full bg-neutral-900 text-white font-medium text-sm">
-                            {step.id}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-medium">{step.title}</h3>
-                              <div className="text-xs py-0.5 px-2 bg-neutral-800/40 rounded-full">
-                                {step.time}
-                              </div>
-                            </div>
-                            <p className="text-foreground/80 mt-1 text-sm">
-                              {step.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Reveal>
-                    ))}
+                <div className="space-y-2 mb-4">
+                  {["Requirements Document", "Architecture", "Technology Stack", "Project Timeline"].map((req) => (
+                    <div key={req} className="flex items-center gap-2 text-foreground/80 text-sm">
+                      <span className="w-2 h-2 rounded-full bg-neutral-500" />
+                      {req}
+                    </div>
+                  ))}
                 </div>
-
-                {/* Right column - requirements analysis */}
-                <div className="bg-white/5 rounded-xl border border-neutral-200/10 p-6 dark:bg-[#23263a] dark:border-[#353a50]">
-                  {activeDeliveryTab === "ai" && (
-                    <>
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-neutral-800/40 p-3 rounded-full">
-                          <BrainCircuit className="h-8 w-8 text-neutral-400" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold">
-                            Discovery & Planning
-                          </h3>
-                          <p className="text-foreground/80 text-sm">
-                            Understanding your business goals and technical
-                            requirements
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3 mb-6">
-                        {[
-                          "Requirements Document",
-                          "Site Architecture",
-                          "Technology Stack",
-                          "Project Timeline",
-                        ].map((req, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <svg
-                              className="text-neutral-400"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M8 0C3.6 0 0 3.6 0 8C0 12.4 3.6 16 8 16C12.4 16 16 12.4 16 8C16 3.6 12.4 0 8 0ZM7 11.4L3.6 8L5 6.6L7 8.6L11 4.6L12.4 6L7 11.4Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                            <span className="text-foreground/80">{req}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="bg-background/20 p-4 rounded-lg mb-6">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">
-                            Duration: 1 week
-                          </span>
-                          <span className="text-xs bg-neutral-800/40 py-0.5 px-2 rounded-full">
-                            Step 1 of 4
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-between gap-3">
-                        <Button variant="outline" disabled className="flex-1">
-                          Previous
-                        </Button>
-                        <Button className="flex-1">Next →</Button>
-                      </div>
-                    </>
-                  )}
-
-                  {activeDeliveryTab === "web" && (
-                    <>
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-neutral-800/40 p-3 rounded-full">
-                          <Globe2 className="h-8 w-8 text-neutral-400" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold">
-                            Discovery & Planning
-                          </h3>
-                          <p className="text-foreground/80 text-sm">
-                            Understanding your business goals and technical
-                            requirements
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3 mb-6">
-                        {[
-                          "Requirements Document",
-                          "Site Architecture",
-                          "Technology Stack",
-                          "Project Timeline",
-                        ].map((req, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <svg
-                              className="text-neutral-400"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M8 0C3.6 0 0 3.6 0 8C0 12.4 3.6 16 8 16C12.4 16 16 12.4 16 8C16 3.6 12.4 0 8 0ZM7 11.4L3.6 8L5 6.6L7 8.6L11 4.6L12.4 6L7 11.4Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                            <span className="text-foreground/80">{req}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="bg-background/20 p-4 rounded-lg mb-6">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">
-                            Duration: 1 week
-                          </span>
-                          <span className="text-xs bg-neutral-800/40 py-0.5 px-2 rounded-full">
-                            Step 1 of 4
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-between gap-3">
-                        <Button variant="outline" disabled className="flex-1">
-                          Previous
-                        </Button>
-                        <Button className="flex-1">Next →</Button>
-                      </div>
-                    </>
-                  )}
-
-                  {activeDeliveryTab === "mobile" && (
-                    <>
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-neutral-800/40 p-3 rounded-full">
-                          <MonitorSmartphone className="h-8 w-8 text-neutral-400" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold">
-                            App Strategy & Planning
-                          </h3>
-                          <p className="text-foreground/80 text-sm">
-                            Defining app features, user experience, and
-                            technical approach
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3 mb-6">
-                        {[
-                          "App Strategy",
-                          "Feature Specifications",
-                          "User Journey Maps",
-                          "Technical Architecture",
-                        ].map((req, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <svg
-                              className="text-neutral-400"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M8 0C3.6 0 0 3.6 0 8C0 12.4 3.6 16 8 16C12.4 16 16 12.4 16 8C16 3.6 12.4 0 8 0ZM7 11.4L3.6 8L5 6.6L7 8.6L11 4.6L12.4 6L7 11.4Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                            <span className="text-foreground/80">{req}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="bg-background/20 p-4 rounded-lg mb-6">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">
-                            Duration: 1-2 weeks
-                          </span>
-                          <span className="text-xs bg-neutral-800/40 py-0.5 px-2 rounded-full">
-                            Step 1 of 4
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-between gap-3">
-                        <Button variant="outline" disabled className="flex-1">
-                          Previous
-                        </Button>
-                        <Button className="flex-1">Next →</Button>
-                      </div>
-                    </>
-                  )}
+                <div className="flex justify-between text-sm">
+                  <span>Duration: 1-2 weeks</span>
+                  <span className="bg-neutral-800/40 py-0.5 px-2 rounded-full">Step 1 of 4</span>
+                </div>
+                <div className="flex justify-between gap-3 mt-4">
+                  <Button variant="outline" disabled className="flex-1">
+                    Previous
+                  </Button>
+                  <Button className="flex-1">Next</Button>
                 </div>
               </div>
             </div>
@@ -1131,7 +807,7 @@ export default function Services() {
         </section>
         <br /> <br />
         {/* Why Our Process Works */}
-        <section className="py-16 bg-neutral-700 dark:bg-[#181a20]">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="text-center mb-12 text-white">
               <h2 className="text-3xl font-bold mb-2 dark:text-white">
@@ -1145,8 +821,8 @@ export default function Services() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Reveal>
-                <div className="text-center p-6">
-                  <div className="bg-white/20 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                <div className="text-center p-0">
+                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1172,8 +848,8 @@ export default function Services() {
               </Reveal>
 
               <Reveal delay={100}>
-                <div className="text-center p-6">
-                  <div className="bg-white/20 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                <div className="text-center p-0">
+                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1201,8 +877,8 @@ export default function Services() {
               </Reveal>
 
               <Reveal delay={200}>
-                <div className="text-center p-6">
-                  <div className="bg-white/20 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                <div className="text-center p-0">
+                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1230,105 +906,7 @@ export default function Services() {
           </div>
         </section>
         {/* Testimonials */}
-        <section className="py-16">
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(10, 5, 25, 0.92) 0%, rgba(20, 10, 40, 0.88) 100%)",
-              backdropFilter: "blur(8px) contrast(130%)",
-              WebkitBackdropFilter: "blur(8px) contrast(130%)",
-              border: "2px solid rgba(255, 255, 255, 0.25)",
-              boxShadow: `
-      0 12px 40px 0 rgba(0, 0, 0, 0.7),
-      0 4px 12px 0 rgba(0, 0, 0, 0.5),
-      inset 0 2px 0 rgba(255, 255, 255, 0.3)
-    `,
-              borderRadius: "20px",
-              padding: "40px 30px",
-            }}
-          >
-            <div className="max-w-7xl mx-auto px-6 lg:px-12">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-2">
-                  What Our Clients Say
-                </h2>
-                <p className="text-muted-foreground">
-                  Don't just take our word for it. Here's what our clients have
-                  to say about our services.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {testimonials.map((testimonial, index) => (
-                  <Reveal key={index} delay={index * 100}>
-                    <Card className="bg-white/5 hover:bg-white/10 border-neutral-200/10 h-full flex flex-col dark:bg-[#23263a] dark:hover:bg-[#353a50] dark:border-[#353a50]">
-                      <CardContent className="pt-6 flex-grow">
-                        <div className="flex mb-4">
-                          {[...Array(5)].map((_, i) => (
-                            <svg
-                              key={i}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="text-yellow-500"
-                            >
-                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                            </svg>
-                          ))}
-                        </div>
-                        <p className="text-foreground/80 dark:text-[#a5b4fc]">
-                          {testimonial.text}
-                        </p>
-                      </CardContent>
-                      <CardFooter className="border-t border-neutral-200/10 pt-4 dark:border-[#353a50]">
-                        <div>
-                          <div className="font-medium dark:text-white">
-                            {testimonial.author}
-                          </div>
-                          <div className="text-sm text-muted-foreground dark:text-[#a5b4fc]">
-                            {testimonial.position}
-                          </div>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* CTA */}
-        <section className="py-16 bg-neutral-700 dark:bg-[#181a20]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-4 dark:text-white">
-                Ready to Transform Your Business?
-              </h2>
-              <p className="text-white/80 mb-8 dark:text-[#a5b4fc]">
-                Let's create your digital future with innovative solutions for
-                your unique needs.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  variant="default"
-                  className="bg-white text-neutral-900 hover:bg-white/90 dark:bg-gradient-to-r dark:from-[#7c3aed] dark:to-[#6366f1] dark:text-white dark:hover:bg-[#7c3aed]/80"
-                >
-                  Start Your Project
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white/10 dark:border-[#a78bfa] dark:text-[#a78bfa] dark:hover:bg-[#23263a]/80"
-                >
-                  View Our Work
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Testimonials removed */}
       </main>
       <Footer />
     </div>
