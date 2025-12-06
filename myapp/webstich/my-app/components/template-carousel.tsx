@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useRef } from "react"
 
 interface Template {
   id: number
@@ -64,77 +65,93 @@ export default function TemplateCarousel() {
   const doubledTemplates2 = [...templates2, ...templates2]
 
   return (
-    <div className="w-full py-12 bg-black overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Explore Our Templates</h2>
-        <p className="text-gray-400">Discover stunning designs for every project</p>
+    <div className="w-full py-12 relative overflow-hidden">
+      {/* Spline 3D Chips Background Effect */}
+      <div className="absolute inset-0 z-0">
+        <iframe 
+          src='https://my.spline.design/chips-ataCHya2Q3BSKwrfmrMrUQ2i/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          className="absolute inset-0 scale-150 opacity-60"
+          style={{ pointerEvents: 'none' }}
+        />
+        {/* Overlay to darken and blend */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
+
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Explore Our Templates</h2>
+          <p className="text-neutral-400">Discover stunning designs for every project</p>
+        </div>
 
       {/* First Row - Left to Right */}
-      <div className="relative mb-8">
-        <div className="flex">
-          <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [0, -50 * 16 * templates1.length / templates1.length],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 30,
-                ease: "linear",
-              },
-            }}
-          >
-            {doubledTemplates1.map((template, index) => (
-              <TemplateCard key={`row1-${template.id}-${index}`} template={template} />
-            ))}
-          </motion.div>
+        <div className="relative mb-8">
+          <div className="flex">
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: [0, -50 * 16 * templates1.length / templates1.length],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 30,
+                  ease: "linear",
+                },
+              }}
+            >
+              {doubledTemplates1.map((template, index) => (
+                <TemplateCard key={`row1-${template.id}-${index}`} template={template} />
+              ))}
+            </motion.div>
+          </div>
+          {/* Gradient Overlays */}
+          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black/80 to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black/80 to-transparent pointer-events-none z-10" />
         </div>
-        {/* Gradient Overlays */}
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
-      </div>
 
-      {/* Second Row - Right to Left */}
-      <div className="relative">
-        <div className="flex justify-end">
-          <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [-50 * 16 * templates2.length / templates2.length, 0],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 35,
-                ease: "linear",
-              },
-            }}
-          >
-            {doubledTemplates2.map((template, index) => (
-              <TemplateCard key={`row2-${template.id}-${index}`} template={template} />
-            ))}
-          </motion.div>
+        {/* Second Row - Right to Left */}
+        <div className="relative">
+          <div className="flex justify-end">
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: [-50 * 16 * templates2.length / templates2.length, 0],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 35,
+                  ease: "linear",
+                },
+              }}
+            >
+              {doubledTemplates2.map((template, index) => (
+                <TemplateCard key={`row2-${template.id}-${index}`} template={template} />
+              ))}
+            </motion.div>
+          </div>
+          {/* Gradient Overlays */}
+          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black/80 to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black/80 to-transparent pointer-events-none z-10" />
         </div>
-        {/* Gradient Overlays */}
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
-      </div>
 
-      {/* See All Templates Link */}
-      <div className="text-center mt-10">
-        <Link 
-          href="/3d-template" 
-          className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-semibold text-lg transition-colors"
-        >
-          See all templates
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </Link>
+        {/* See All Templates Link */}
+        <div className="text-center mt-10">
+          <Link 
+            href="/3d-template" 
+            className="inline-flex items-center gap-2 text-zinc-300 hover:text-white font-semibold text-lg transition-colors"
+          >
+            See all templates
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </div>
   )

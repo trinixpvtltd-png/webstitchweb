@@ -21,7 +21,7 @@ const features: AIFeature[] = [
     title: "AI Content Writer",
     description: "Create engaging content for any platform",
     icon: <BookOpen className="w-8 h-8" />,
-    color: "from-purple-500/20 to-purple-600/20",
+    color: "from-zinc-500/20 to-zinc-600/20",
   },
   {
     title: "AI Bot Builder",
@@ -51,7 +51,7 @@ const features: AIFeature[] = [
     title: "AI Portfolio Wizard",
     description: "Build stunning portfolios with AI assistance",
     icon: <UserCheck className="w-8 h-8" />,
-    color: "from-pink-500/20 to-pink-600/20",
+    color: "from-neutral-500/20 to-neutral-600/20",
   },
   {
     title: "AI Social Media Post Generator",
@@ -102,7 +102,7 @@ export default function AIPage() {
           >
             <Sparkles className="w-12 h-12 text-primary" />
           </motion.div>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-pink-500">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-zinc-200 via-white to-zinc-200">
             AI Powered Tools
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -207,7 +207,7 @@ export default function AIPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/50 to-black">
+      <section className="w-full h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/50 to-neutral-950">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -219,7 +219,7 @@ export default function AIPage() {
             Join thousands of users leveraging AI to supercharge their workflow
           </p>
           <motion.button
-            className="px-8 py-4 rounded-lg bg-gradient-to-r from-primary to-purple-600 text-primary-foreground font-semibold hover:shadow-lg transition-all text-lg"
+            className="px-8 py-4 rounded-lg bg-white text-black font-semibold hover:shadow-lg hover:shadow-white/20 transition-all text-lg"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

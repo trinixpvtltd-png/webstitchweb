@@ -48,36 +48,36 @@ function getImageUrl(template: TemplateItem): string {
 
 function CategoryBox({ title, templates, linkHref, linkText, loading }: CategoryBoxProps) {
   return (
-    <div className="bg-gray-900 rounded-lg p-5 shadow-lg border border-gray-800 flex flex-col h-full">
+    <div className="bg-neutral-900 rounded-lg p-5 shadow-lg border border-neutral-800 flex flex-col h-full">
       <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
       <div className="grid grid-cols-2 gap-3 flex-1">
         {loading ? (
           // Loading skeleton
           [...Array(4)].map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="aspect-square rounded-md bg-gray-800"></div>
-              <div className="h-3 bg-gray-800 rounded mt-1 w-3/4"></div>
+              <div className="aspect-square rounded-md bg-neutral-800"></div>
+              <div className="h-3 bg-neutral-800 rounded mt-1 w-3/4"></div>
             </div>
           ))
         ) : templates.length > 0 ? (
           templates.slice(0, 4).map((template) => (
             <Link key={template._id || template.id} href={linkHref} className="group">
-              <div className="relative aspect-square rounded-md overflow-hidden bg-gray-800">
+              <div className="relative aspect-square rounded-md overflow-hidden bg-neutral-800 border border-neutral-700">
                 <TemplateImage 
                   src={getImageUrl(template)} 
                   alt={template.title} 
                 />
               </div>
-              <p className="text-xs text-gray-400 mt-1 truncate">{template.title}</p>
+              <p className="text-xs text-neutral-400 mt-1 truncate">{template.title}</p>
             </Link>
           ))
         ) : (
-          <p className="text-gray-500 text-sm col-span-2">No templates available</p>
+          <p className="text-neutral-500 text-sm col-span-2">No templates available</p>
         )}
       </div>
       <Link 
         href={linkHref} 
-        className="text-purple-400 hover:text-purple-300 hover:underline text-sm font-medium mt-4 inline-block"
+        className="text-zinc-300 hover:text-white hover:underline text-sm font-medium mt-4 inline-block"
       >
         {linkText}
       </Link>
@@ -134,7 +134,7 @@ export default function TemplateCategories() {
   ]
 
   return (
-    <div className="w-full py-8 px-4 md:px-8 lg:px-12 bg-black">
+    <div className="w-full py-8 px-4 md:px-8 lg:px-12 bg-neutral-950">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => (

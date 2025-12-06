@@ -65,21 +65,21 @@ export default function DashboardPage() {
   }
 
   if (loading) {
-    return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>
+    return <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">Loading...</div>
   }
 
   if (!user) return null
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-neutral-950 text-white pt-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-zinc-200 via-white to-zinc-200 bg-clip-text text-transparent">
               Dashboard
             </h1>
-            <p className="text-gray-400 mt-2">Welcome back, {user.fullname}</p>
+            <p className="text-neutral-400 mt-2">Welcome back, {user.fullname}</p>
           </div>
           <button
             onClick={handleLogout}
@@ -92,16 +92,16 @@ export default function DashboardPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-            <h3 className="text-gray-400 text-sm mb-2">Account Type</h3>
+          <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800">
+            <h3 className="text-neutral-400 text-sm mb-2">Account Type</h3>
             <p className="text-2xl font-bold capitalize">{user.role}</p>
           </div>
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-            <h3 className="text-gray-400 text-sm mb-2">Liked Templates</h3>
+          <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800">
+            <h3 className="text-neutral-400 text-sm mb-2">Liked Templates</h3>
             <p className="text-2xl font-bold">{likedTemplates.length}</p>
           </div>
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-            <h3 className="text-gray-400 text-sm mb-2">Email</h3>
+          <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800">
+            <h3 className="text-neutral-400 text-sm mb-2">Email</h3>
             <p className="text-xl font-bold truncate">{user.email}</p>
           </div>
         </div>
@@ -109,9 +109,9 @@ export default function DashboardPage() {
         {/* Liked Templates Section */}
         <h2 className="text-2xl font-bold mb-6">Liked Templates</h2>
         {likedTemplates.length === 0 ? (
-          <div className="text-center py-20 bg-white/5 rounded-xl border border-white/10">
-            <Heart className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400">You haven't liked any templates yet.</p>
+          <div className="text-center py-20 bg-neutral-900/50 rounded-xl border border-neutral-800">
+            <Heart className="w-12 h-12 text-neutral-600 mx-auto mb-4" />
+            <p className="text-neutral-400">You haven't liked any templates yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -120,7 +120,7 @@ export default function DashboardPage() {
                 key={template._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-gray-700 transition-colors"
+                className="group bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800 hover:border-neutral-700 transition-colors"
               >
                 <div className="relative aspect-video">
                   <Image
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-lg mb-2">{template.title}</h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                  <div className="flex items-center gap-4 text-sm text-neutral-400">
                     <span className="flex items-center gap-1.5">
                       <Eye className="w-4 h-4" />
                       {template.views || 0}
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                       <Heart className="w-4 h-4 fill-red-500" />
                       {template.likes || 0}
                     </span>
-                    <span className="ml-auto capitalize px-2 py-1 rounded bg-gray-800 text-xs">
+                    <span className="ml-auto capitalize px-2 py-1 rounded bg-neutral-800 text-xs">
                       {template.category}
                     </span>
                   </div>

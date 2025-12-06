@@ -37,13 +37,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white px-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl"
+        className="w-full max-w-md p-8 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-xl"
       >
-        <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-zinc-200 via-white to-zinc-200 bg-clip-text text-transparent">
           Welcome Back
         </h1>
         
@@ -55,21 +55,21 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
+            <label className="block text-sm font-medium text-neutral-400 mb-1">Email</label>
             <input
               type="email"
               required
-              className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full bg-neutral-950/50 border border-neutral-700 rounded-lg px-4 py-2 focus:outline-none focus:border-white transition-colors"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
+            <label className="block text-sm font-medium text-neutral-400 mb-1">Password</label>
             <input
               type="password"
               required
-              className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full bg-neutral-950/50 border border-neutral-700 rounded-lg px-4 py-2 focus:outline-none focus:border-white transition-colors"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
@@ -78,15 +78,15 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-gray-400 text-sm">
+        <p className="mt-6 text-center text-neutral-400 text-sm">
           Don't have an account?{" "}
-          <Link href="/signup" className="text-purple-400 hover:text-purple-300">
+          <Link href="/signup" className="text-zinc-300 hover:text-white">
             Sign up
           </Link>
         </p>

@@ -107,9 +107,23 @@ export default function TemplateGrid({ category, query, title, description }: Te
   if (error) return <div className="min-h-screen pt-20 text-center text-red-500">{error}</div>
 
   return (
-    <main className="relative z-10 w-full min-h-screen overflow-hidden pt-16">
+    <main className="relative w-full min-h-screen overflow-hidden pt-16">
+      {/* Spline 3D Background Effect */}
+      <div className="absolute inset-0 z-0">
+        <iframe 
+          src='https://my.spline.design/hypnotism-6qVe76Nx3eKfkO4xejzh9XRu/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          className="absolute inset-0 scale-150 opacity-40"
+          style={{ pointerEvents: 'none' }}
+        />
+        {/* Overlay to darken and blend */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+
       {/* Hero Section */}
-      <section className="w-full py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 w-full py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -128,7 +142,7 @@ export default function TemplateGrid({ category, query, title, description }: Te
       </section>
 
       {/* Grid Section */}
-      <section className="w-full py-20 px-4 sm:px-6 lg:px-8 pb-32">
+      <section className="relative z-10 w-full py-20 px-4 sm:px-6 lg:px-8 pb-32">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {templates.map((template, index) => (
@@ -281,7 +295,7 @@ export default function TemplateGrid({ category, query, title, description }: Te
                   <div>
                     {/* Avatar & Title */}
                     <div className="flex items-start gap-4 mb-6">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex-shrink-0" />
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-zinc-400 to-white flex-shrink-0" />
                       <div className="flex-1">
                         <h2 className="text-2xl font-bold text-white mb-1">
                           {selectedTemplate.title}

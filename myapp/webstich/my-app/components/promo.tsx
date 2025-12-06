@@ -13,11 +13,25 @@ export default function Promo() {
   const y = useTransform(scrollYProgress, [0, 1], ["-10vh", "10vh"])
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
+      {/* Spline 3D Background Effect */}
+      <div className="absolute inset-0 z-0">
+        <iframe 
+          src='https://my.spline.design/hypnotism-6qVe76Nx3eKfkO4xejzh9XRu/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          className="absolute inset-0 scale-150 opacity-60"
+          style={{ pointerEvents: 'none' }}
+        />
+        {/* Overlay to darken and blend */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
       {/* Promo Hero Section */}
       <div
         ref={container}
-        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative z-10 w-full min-h-screen flex items-center justify-center overflow-hidden"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         <div className="absolute top-0 left-0 h-full w-full">

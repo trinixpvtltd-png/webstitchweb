@@ -69,9 +69,9 @@ export default function TemplatePage({
               transition={{ delay: 0.6 }}
             >
               <div>
-                <div className="flex items-center gap-2 text-yellow-400 mb-1">
+                <div className="flex items-center gap-2 text-zinc-300 mb-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400" />
+                    <Star key={i} className="w-4 h-4 fill-zinc-300" />
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">{rating} Rating</p>
@@ -118,7 +118,7 @@ export default function TemplatePage({
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-2xl blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-r from-zinc-500/20 to-neutral-500/20 rounded-2xl blur-3xl" />
             <div className="relative w-full h-full rounded-2xl overflow-hidden border border-border/30 bg-background/50">
               <Image
                 src={image}
@@ -196,7 +196,7 @@ export default function TemplatePage({
             Download this template and start building something amazing today
           </p>
           <motion.button
-            className="px-8 py-4 rounded-lg bg-gradient-to-r from-primary to-purple-600 text-primary-foreground font-semibold hover:shadow-lg transition-all text-lg"
+            className="px-8 py-4 rounded-lg bg-white text-black font-semibold hover:shadow-lg hover:shadow-white/20 transition-all text-lg"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

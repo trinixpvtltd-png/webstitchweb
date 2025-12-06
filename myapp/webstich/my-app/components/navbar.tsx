@@ -73,6 +73,7 @@ export default function Navbar() {
     { label: "App Template", href: "/app-template" },
     { label: "Chatbot", href: "/chatbot" },
     { label: "AI", href: "/ai" },
+    { label: "Packages", href: "/packages" },
     { label: "Contact", href: "/contact" },
   ]
 
@@ -114,11 +115,11 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Top Bar */}
-      <div className="w-full bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-md border-b border-gray-800 px-4 sm:px-6 lg:px-8 shadow-lg">
+      <div className="w-full bg-gradient-to-r from-neutral-900 via-neutral-950 to-neutral-900 backdrop-blur-md border-b border-neutral-800 px-4 sm:px-6 lg:px-8 shadow-lg">
         <div className="flex items-center justify-between h-16 max-w-7xl mx-auto">
           {/* Left: Logo */}
           <Link href="/" className="font-bold text-2xl tracking-tight flex items-center gap-2 group">
-            <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 bg-clip-text text-transparent group-hover:from-pink-500 group-hover:via-purple-500 group-hover:to-pink-500 transition-all duration-500">
+            <span className="bg-gradient-to-r from-zinc-200 via-white to-zinc-200 bg-clip-text text-transparent group-hover:from-white group-hover:via-zinc-200 group-hover:to-white transition-all duration-500">
               webstich
             </span>
           </Link>
@@ -127,7 +128,7 @@ export default function Navbar() {
           <form className="flex-1 max-w-2xl mx-8 hidden md:flex" onSubmit={handleSearch}>
             <div className="relative w-full flex">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-neutral-400">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
                 </svg>
               </div>
@@ -136,9 +137,9 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search templates, designs, themes..."
-                className="w-full pl-12 pr-4 py-2.5 rounded-l-xl border-2 border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:bg-gray-800 transition-all duration-300"
+                className="w-full pl-12 pr-4 py-2.5 rounded-l-xl border-2 border-neutral-700 bg-neutral-800/50 text-white placeholder-neutral-400 focus:outline-none focus:border-white focus:bg-neutral-800 transition-all duration-300"
               />
-              <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-r-xl hover:from-purple-500 hover:to-pink-500 transition-all duration-300 font-medium">
+              <button type="submit" className="px-6 py-2.5 bg-white text-black rounded-r-xl hover:bg-zinc-200 transition-all duration-300 font-medium">
                 Search
               </button>
             </div>
@@ -147,24 +148,24 @@ export default function Navbar() {
           {/* Right: Auth, Wishlist, Cart */}
           <div className="flex items-center gap-2">
             {user ? (
-              <Link href={user.role === 'admin' ? "/admin/dashboard" : "/dashboard"} className="text-sm font-medium bg-gray-800 hover:bg-gray-700 text-white px-4 py-2.5 rounded-xl transition-all duration-300 border border-gray-700 hover:border-purple-500">
+              <Link href={user.role === 'admin' ? "/admin/dashboard" : "/dashboard"} className="text-sm font-medium bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2.5 rounded-xl transition-all duration-300 border border-neutral-700 hover:border-white">
                 Dashboard
               </Link>
             ) : (
-              <Link href="/login" className="text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-xl hover:from-purple-500 hover:to-pink-500 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40">
+              <Link href="/login" className="text-sm font-semibold bg-white text-black px-5 py-2.5 rounded-xl hover:bg-zinc-200 transition-all duration-300 shadow-lg shadow-white/10 hover:shadow-white/20">
                 Login / Signup
               </Link>
             )}
-            <Link href="/wishlist" className="p-2.5 rounded-xl bg-gray-800/50 hover:bg-gray-700 border border-gray-700 hover:border-pink-500 transition-all duration-300 group" aria-label="Wishlist">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-300 group-hover:text-pink-500 transition-colors">
+            <Link href="/wishlist" className="p-2.5 rounded-xl bg-neutral-800/50 hover:bg-neutral-700 border border-neutral-700 hover:border-white transition-all duration-300 group" aria-label="Wishlist">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>
             </Link>
-            <Link href="/cart" className="p-2.5 rounded-xl bg-gray-800/50 hover:bg-gray-700 border border-gray-700 hover:border-purple-500 transition-all duration-300 relative group" aria-label="Cart">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-300 group-hover:text-purple-500 transition-colors">
+            <Link href="/cart" className="p-2.5 rounded-xl bg-neutral-800/50 hover:bg-neutral-700 border border-neutral-700 hover:border-white transition-all duration-300 relative group" aria-label="Cart">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold">0</span>
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-black text-xs rounded-full flex items-center justify-center font-bold">0</span>
             </Link>
             {/* Mobile Menu Toggle */}
             <button

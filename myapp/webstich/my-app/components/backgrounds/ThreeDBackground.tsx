@@ -4,13 +4,13 @@ import { motion } from "framer-motion"
 
 export default function ThreeDBackground() {
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-black">
+    <div className="fixed inset-0 z-0 overflow-hidden bg-neutral-950">
       {/* Deep Space Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/40 via-[#020617] to-black" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-800/20 via-[#020617] to-neutral-950" />
       
       {/* Nebula Clouds */}
       <motion.div 
-        className="absolute top-1/4 -left-1/4 w-[800px] h-[800px] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen"
+        className="absolute top-1/4 -left-1/4 w-[800px] h-[800px] bg-zinc-600/10 rounded-full blur-[120px] mix-blend-screen"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
