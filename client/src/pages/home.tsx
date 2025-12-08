@@ -139,8 +139,9 @@ export default function Home() {
           <HeroSection />
           <AboutSection />
           <ServicesSection />
-          <CTASection />
+          
           <InsightsSection />
+          <CTASection />
         </main>
         <Footer />
       </div>

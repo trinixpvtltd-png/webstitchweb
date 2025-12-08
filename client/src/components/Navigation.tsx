@@ -72,12 +72,17 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-          <div
-            className="text-xl font-bold tracking-tight"
-            data-testid="text-logo"
-          >
-            WebStitch
-          </div>
+          <a href="/home" className="flex items-center" data-testid="logo">
+            <img
+              src="/webstitch_logo.png"
+              alt="WebStitch"
+              className="h-24 w-24 object-contain translate-y-1 translate-x-2"
+              style={{ filter: 'drop-shadow(0 0 0.5rem rgba(139, 92, 246, 0.3))' }}
+            />
+            <span className="text-2xl font-bold text-white -translate-x-2">
+              WebStitch
+            </span>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
