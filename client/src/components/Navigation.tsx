@@ -109,18 +109,18 @@ export default function Navigation() {
               </a>
 
               {showServicesDropdown && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-background border border-border rounded-lg shadow-2xl p-6 grid grid-cols-3 gap-6 min-w-[800px]">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-2xl p-8 grid grid-cols-3 gap-8 min-w-[850px]">
                   {/* Marketing Services */}
                   <div>
-                    <h3 className="font-semibold text-sm mb-3 text-foreground">
+                    <h3 className="font-bold text-xl mb-4 text-foreground bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                       Artificial Intelligence
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {servicesData.ai.map((service, index) => (
                         <li key={index}>
                           <a
                             href="/services"
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors block"
+                            className="text-xl text-muted-foreground hover:text-primary transition-colors block"
                           >
                             {service}
                           </a>
@@ -131,15 +131,15 @@ export default function Navigation() {
 
                   {/* SEO & Paid Ads Services */}
                   <div>
-                    <h3 className="font-semibold text-sm mb-3 text-foreground">
+                    <h3 className="font-bold text-xl mb-4 text-foreground bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                       SEO Services
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {servicesData.seo.map((service, index) => (
                         <li key={index}>
                           <a
                             href="/contact"
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors block"
+                            className="text-xl text-muted-foreground hover:text-primary transition-colors block"
                           >
                             {service}
                           </a>
@@ -147,15 +147,15 @@ export default function Navigation() {
                       ))}
                     </ul>
 
-                    <h3 className="font-semibold text-sm mt-4 mb-3 text-foreground">
+                    <h3 className="font-bold text-xl mt-6 mb-4 text-foreground bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                       Paid Ads Services
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {servicesData.paidAds.map((service, index) => (
                         <li key={index}>
                           <a
                             href="/contact"
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors block"
+                            className="text-xl text-muted-foreground hover:text-primary transition-colors block"
                           >
                             {service}
                           </a>
@@ -166,15 +166,15 @@ export default function Navigation() {
 
                   {/* Other Services */}
                   <div>
-                    <h3 className="font-semibold text-sm mb-3 text-foreground">
+                    <h3 className="font-bold text-xl mb-4 text-foreground bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                       Other Services
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {servicesData.other.map((service, index) => (
                         <li key={index}>
                           <a
-                            href="/portfolio"
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors block"
+                            href="/services"
+                            className="text-xl text-muted-foreground hover:text-primary transition-colors block"
                           >
                             {service}
                           </a>
